@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOCA Clinic | 오아시스 영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0F2357;
+    --navy-light: #1a3580;
+    --navy-dark: #081740;
+    --cream: #F5EDD9;
+    --cream-dark: #EBE0C4;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --white: #FDFAF4;
+    --text-dark: #0F2357;
+    --text-mid: #3a5080;
+    --correct: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --wrong: #C62828;
+    --wrong-bg: #FFEBEE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    word-break: keep-all;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 3px solid var(--gold);
+  }
+  .logo-mark {
+    width: 40px; height: 40px;
+    background: var(--gold);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--cream);
+    letter-spacing: 1px;
+  }
+  .header-text p {
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-top: 1px;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── START SCREEN ── */
+  #startScreen {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 20px 40px;
+  }
+  .start-title {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .start-title h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .start-title p {
+    font-size: 13px;
+    color: var(--text-mid);
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    border: 1.5px solid var(--cream-dark);
+    box-shadow: 0 2px 12px rgba(15,35,87,0.07);
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .range-row span {
+    font-size: 13px;
+    color: var(--text-mid);
+    white-space: nowrap;
+  }
+  select {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    background: var(--cream);
+    color: var(--navy);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230F2357' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+  }
+  select:focus { outline: none; border-color: var(--navy); }
+
+  .info-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+  .info-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--gold-light);
+  }
+  .info-desc {
+    font-size: 10px;
+    color: rgba(245,237,217,0.7);
+    margin-top: 2px;
+  }
+
+  .btn-start {
+    width: 100%;
+    padding: 16px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    border-bottom: 3px solid var(--gold);
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .btn-start:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-start:active { transform: translateY(0); }
+
+  /* ── QUIZ SCREEN ── */
+  #quizScreen {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  .quiz-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .quiz-progress-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-mid);
+  }
+  .quiz-day-badge {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .progress-bar-wrap {
+    height: 6px;
+    background: var(--cream-dark);
+    border-radius: 3px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+
+  .word-card {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(15,35,87,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+  .word-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.08);
+  }
+  .word-num {
+    font-size: 11px;
+    color: rgba(245,237,217,0.5);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+  .word-english {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .word-hint {
+    font-size: 12px;
+    color: rgba(245,237,217,0.45);
+    margin-top: 4px;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .choice-btn {
+    background: var(--white);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 12px;
+    padding: 14px 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.12s;
+    text-align: center;
+    word-break: keep-all;
+    line-height: 1.4;
+  }
+  .choice-btn:hover:not(:disabled) {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15,35,87,0.15);
+  }
+  .choice-btn:active:not(:disabled) { transform: translateY(0); }
+  .choice-btn.selected {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--navy);
+  }
+  .choice-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .choice-btn.selected .choice-num { color: var(--gold-light); }
+
+  .skip-btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    background: transparent;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .skip-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ── RESULT SCREEN ── */
+  #resultScreen {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .result-score-ring {
+    width: 110px; height: 110px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+  .result-score-ring svg { transform: rotate(-90deg); }
+  .score-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .score-pct {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--navy);
+    display: block;
+  }
+  .score-sub {
+    font-size: 10px;
+    color: var(--text-mid);
+    display: block;
+    margin-top: -2px;
+  }
+  .result-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .result-subtitle {
+    font-size: 13px;
+    color: var(--text-mid);
+  }
+
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    border: 1.5px solid var(--cream-dark);
+  }
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+  }
+  .stat-num.correct { color: var(--correct); }
+  .stat-num.wrong { color: var(--wrong); }
+  .stat-num.total { color: var(--navy); }
+  .stat-label { font-size: 11px; color: var(--text-mid); margin-top: 3px; }
+
+  .wrong-list-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .wrong-item {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--wrong);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .wrong-english {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .wrong-answer-row { font-size: 12px; margin-top: 3px; }
+  .wrong-correct { color: var(--correct); font-weight: 700; }
+  .wrong-my { color: var(--wrong); }
+  .wrong-day {
+    font-size: 10px;
+    color: var(--text-mid);
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .result-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .btn-retry {
+    padding: 14px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 3px solid var(--gold);
+    transition: all 0.15s;
+  }
+  .btn-retry:hover { background: var(--navy-light); }
+  .btn-back {
+    padding: 14px;
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-back:hover { background: var(--navy); color: var(--cream); }
+
+  .correct-list-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2E7D32;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 16px;
+  }
+  .correct-item {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    border-left: 3px solid var(--correct);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .correct-english {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .correct-korean { font-size: 12px; color: var(--correct); font-weight: 500; }
+
+  .divider {
+    height: 1px;
+    background: var(--cream-dark);
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-mark">O</div>
+  <div class="header-text">
+    <h1>VOCA CLINIC</h1>
+    <p>완자 고등 영어 단어 | 산본 오아시스 영어학원</p>
+  </div>
+</div>
+
+<!-- ===== START SCREEN ===== -->
+<div id="startScreen" class="screen active">
+  <div class="start-title">
+    <h2>Day 범위를 선택하세요</h2>
+    <p>선택한 범위의 단어를 순서대로 출제합니다</p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">📖 학습 범위</div>
+    <div class="range-row">
+      <select id="startDay">
+        <!-- filled by JS -->
+      </select>
+      <span>일 부터</span>
+      <select id="endDay">
+        <!-- filled by JS -->
+      </select>
+      <span>일 까지</span>
+    </div>
+    <div class="info-box" id="infoBox">
+      <div class="info-item">
+        <span class="info-num" id="infodays">—</span>
+        <span class="info-desc">Days</span>
+      </div>
+      <div class="info-item">
+        <span class="info-num" id="infowords">—</span>
+        <span class="info-desc">단어 수</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-start" onclick="startQuiz()">▶ 시작하기</button>
+</div>
+
+<!-- ===== QUIZ SCREEN ===== -->
+<div id="quizScreen" class="screen">
+  <div class="quiz-topbar">
+    <span class="quiz-progress-text" id="progressText">1 / 32</span>
+    <span class="quiz-day-badge" id="dayBadge">Day 1</span>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <div class="word-card">
+    <div class="word-num" id="wordNum">No.1</div>
+    <div class="word-english" id="wordEnglish">consider</div>
+    <div class="word-hint" id="wordHint">Day 1</div>
+  </div>
+  <div class="choices" id="choicesContainer"></div>
+  <button class="skip-btn" onclick="skipWord()">→ 모르겠어요 (넘기기)</button>
+</div>
+
+<!-- ===== RESULT SCREEN ===== -->
+<div id="resultScreen" class="screen">
+  <div class="result-header">
+    <div class="result-score-ring">
+      <svg width="110" height="110" viewBox="0 0 110 110">
+        <circle cx="55" cy="55" r="46" fill="none" stroke="#EBE0C4" stroke-width="8"/>
+        <circle cx="55" cy="55" r="46" fill="none" stroke="#C9A84C" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="289" id="scoreCircle" stroke-dashoffset="289"/>
+      </svg>
+      <div class="score-text">
+        <span class="score-pct" id="scorePct">0%</span>
+        <span class="score-sub" id="scoreRaw">0/0</span>
+      </div>
+    </div>
+    <div class="result-title" id="resultTitle">결과</div>
+    <div class="result-subtitle" id="resultSubtitle"></div>
+  </div>
+
+  <div class="result-stats">
+    <div class="stat-card">
+      <div class="stat-num total" id="statTotal">0</div>
+      <div class="stat-label">총 문제</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num correct" id="statCorrect">0</div>
+      <div class="stat-label">정답</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num wrong" id="statWrong">0</div>
+      <div class="stat-label">오답+미답</div>
+    </div>
+  </div>
+
+  <div id="wrongSection"></div>
+
+  <div class="result-btns">
+    <button class="btn-retry" onclick="retryWrong()">✗ 오답만 다시풀기</button>
+    <button class="btn-back" onclick="goHome()">← 처음으로</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// 완자 VOCA 데이터 (Day 1~55, 각 Day: [{en, ko, choices:[...4]}, ...])
+// choices: [정답포함 4개], 정답은 choices[0]이 아님 — 별도 answerIdx
+// 구조: {en, ko, options:[4개 한국어], answer:0~3}
+// ============================================================
+
+const VOCAB = {};
+
+// Helper to build a question entry
+function q(en, ko, w2, w3, w4) {
+  return { en, ko, distractors: [w2, w3, w4] };
+}
+
+VOCAB[1] = [
+  q("consider","생각하다","계속해서 잇따르다","약한","속력"),
+  q("intensify","세게하다","경우","기념일","흘끗 봄"),
+  q("impress","깊은 인상을 주다","훈육하다","작은 사건","문학의"),
+  q("distinguish","구별하다","노력","차별하다","납치하다"),
+  q("industrial","산업의","갈채","역겨운","고통을 겪다"),
+  q("offer","제의하다","경영간부","화나게 하다","담그다"),
+  q("require","필요로 하다","매달다","전망","다 써버리다"),
+  q("opportunity","좋은기회","방대함","고수하다","~을 능가하다"),
+  q("produce","생산하다","기근","비어있는","사막"),
+  q("behave","행동하다","항해","장관","발산하다"),
+  q("boost","밀어 올리다","쓰레기","소중히 하다","훈육하다"),
+  q("community","공동체","상대","열정적인","옹호자"),
+  q("realize","깨닫다","왕위","제분소","대야"),
+  q("tend","~하는 경향이 있다","공급하다","범위","~하지 않는"),
+  q("meditate","묵상하다","친밀한","순진한","불안"),
+  q("simplify","단순화하다","힐끗 보기","경영간부","제거하다"),
+  q("vary","변하다","승인하다","모조","겁많은"),
+  q("affect","영향을 미치다","물속에 잠기게 하다","초과","번영하다"),
+  q("activate","작동시키다","근본적인","질문지","승무원"),
+  q("differentiate","구분하다","진짜의","심사 숙고하다","기계류"),
+  q("solution","해결","음모","더미","인정하다"),
+  q("generate","발생시키다","적당한","거대한","두근거리다"),
+  q("increase","증가","양립할 수 있는","추천하다","오도하는"),
+  q("contemplate","심사 숙고하다","뽑다","끄덕이다","영속하는"),
+  q("govern","통치하다","지구의","규칙적인","전부의"),
+  q("contact","접촉","감각이 없는","발산하다","고통"),
+  q("consume","소비하다","법률을 제정하다","명백한","녹이다"),
+  q("physical","신체의","즉석에서 하다","가능성이 있는","기질"),
+  q("remedy","구제책","위원회","끊임없는","썩다"),
+  q("observe","알아채다","졸업하다","습격","모순되다"),
+  q("determine","결정하다","토하다","촉진하다","담그다"),
+  q("force","힘","고립시키다","분명히 하다","상품 진열대"),
+];
+
+VOCAB[2] = [
+  q("advertise","광고하다","반란을 일으키다","병","전속력으로 달리다"),
+  q("achieve","이루다","주장","외치다","호화로운"),
+  q("reflect","반사하다","통과","떠돌아다니다","분리된"),
+  q("fulfill","실행하다","장애","~을 면밀히 조사하다","극지의"),
+  q("personal","개인적인","싹이 돋다","제거하다","운명"),
+  q("attain","달성하다","하수","조절하다","끼워 넣다"),
+  q("approach","~에 접근하다","침입하다","의사소통하다","시대"),
+  q("accomplish","성취하다","위엄 있는","짜증나게 하다","소유하다"),
+  q("regard","~으로 여기다","굴러 떨어지다","심부름","눈부시게 하다"),
+  q("promise","약속","벗어나다","그럴듯한","(가치.중요성이)~보다크다"),
+  q("expect","기대하다","이국적인","육중한","허락하다"),
+  q("anticipate","예상하다","진공의","개별의","확대하다"),
+  q("adopt","채택하다","얼다","의류","경영간부"),
+  q("relative","친척","정직한","맹세하다","미덕"),
+  q("volunteer","자원봉사자","만족시키다","얻다","학기"),
+  q("attention","주의","역병","조사","경험적인"),
+  q("occur","발생하다","방식","갈채","이상한"),
+  q("equate","등식화하다","희미한","꽃봉오리","살충제"),
+  q("implement","도구","빠지다","잠시 중지하다","현저한"),
+  q("global","지구의","조정하다","(접촉)전염","이용할 수 있는"),
+  q("perform","공연하다","사투리","원기왕성한","~이 되게하다"),
+  q("imagine","상상하다","기부하다","세게하다","설립하다"),
+  q("describe","묘사하다","격노","떠돌아다니다","휴대할수 있는"),
+  q("convey","운반하다","반응하다","모방하다","예언"),
+  q("communicate","의사소통하다","협력하다","재간있는","방해하다"),
+  q("frustrate","좌절시키다","수술을 받다","번역하다","하수"),
+  q("individual","개별의","한모금","자랑하다","외상치료의"),
+  q("indifferent","무관심한","굽다","왕위","문자 그대로의"),
+  q("notice","주목하다","느슨한","동정","촉진하다"),
+  q("survive","살아남다","영속하는","동등한","빨다"),
+  q("immediate","즉시의","불필요한","구체적인","기념비"),
+  q("visualize","마음에 떠오르게 하다","능력있는","감염시키다","의심하는"),
+];
+
+VOCAB[3] = [
+  q("ignore","무시하다","이해하다","대다수","의상"),
+  q("prepare","준비하다","평형","기쁨","짐승의"),
+  q("available","이용할 수 있는","물방울을 떨어뜨리다","친밀한","냄새를 맡다"),
+  q("compose","구성하다","훔치다","민주주의","붙잡다"),
+  q("benefit","혜택","매달리다","확대하다","미묘한"),
+  q("encourage","격려하다","난파","이상한","화물"),
+  q("concentrate","집중하다","면역된","분배하다","종결하다"),
+  q("impact","충격","형벌","도구","빈번한"),
+  q("proper","적합한","논박하다","조직하다","감사하는"),
+  q("improve","향상시키다","경계하는","연속적인","심부름"),
+  q("potential","가능성이 있는","효율적인","보존하다","도박하다"),
+  q("participate","참가하다","가볍게 두드리다","뒤쫓다","광대한"),
+  q("discourage","낙담시키다","범위","내려다보다","수평의"),
+  q("advantage","유리한 점","조언","질식시키다","기업체"),
+  q("temperature","온도","조각하다","탄원","설득하여 ~시키다"),
+  q("prefer","더 좋아하다","요리","돌다","폭로하다"),
+  q("enhance","높이다","약화시키다","제한하다","큰배"),
+  q("contain","함유하다","줄다","말의","이야기하다"),
+  q("share","함께 나누다","이전의","활용하다","보존하다"),
+  q("contrast","대조","운명","향수","요새"),
+  q("regular","규칙적인","호되게 꾸짖다","정당화하다","비어있는"),
+  q("include","포함하다","생각해내다","실제의","중재하다"),
+  q("range","범위","동요시키다","총계의","휴양지"),
+  q("incorporate","통합하다","울다","제외하다","오도하는"),
+  q("alter","고치다","썩다","회전하다","변하다"),
+  q("involve","관여하다","(유령이)출몰하다","기어가다","숨이 막히는 듯한"),
+  q("enrich","풍요하게하다","군림","예상하다","도살"),
+  q("attempt","시도","역경","경멸","(도로를)포장하다"),
+  q("merit","장점","감소시키다","공포의","적당한"),
+  q("influence","영향","생생한","완고한","문명화하다"),
+  q("eventually","마침내","아담한","조상","문의하다"),
+  q("exclude","제외하다","애매한","후원자","표면의"),
+];
+
+VOCAB[4] = [
+  q("oppose","반대하다","설득하다","불모의","기질"),
+  q("compare","비교하다","설교하다","탄원","고용하다"),
+  q("secure","확보하다","인내","노력","오랫동안 지속되는"),
+  q("absolute","절대적인","범위","탐험","인체하다"),
+  q("administer","경영하다","간섭하다","애매한","근본적인"),
+  q("supply","공급하다","만기가 되다","고용하다","중재하다"),
+  q("practical","실제의","영장류","펴다","해임"),
+  q("frequent","빈번한","빨갛게 불타다","말의","궤도"),
+  q("anxiety","불안","중력","예견하다","철저한"),
+  q("preserve","보존하다","유사성","예약하다","흡수하다"),
+  q("institute","학회","촉진하다","도시의","동료"),
+  q("depart","떠나다","공동체","영세농민","대략의"),
+  q("perspective","관점","방아쇠","재해","일치하다"),
+  q("deliver","배달하다","하위의","부수다","발생시키다"),
+  q("direction","방향","해결","침해하다","끌다"),
+  q("layer","층","(안내광고용) 책자","남은 음식","예언"),
+  q("harm","해","높이다","생략하다","뿌리다"),
+  q("remote","먼","설교","사임하다","흡수하다"),
+  q("manage","관리하다","약탈자","유전자","실신시키다"),
+  q("independent","독립한","버리다","적법한","박살내다"),
+  q("provide","공급하다","정맥","조잡한","섞다"),
+  q("utter","완전한","평가하다","고통을 덜다","건너뛰다"),
+  q("desire","몹시 바라다","희생","쳐부수다","분리된"),
+  q("support","지탱하다","의도하다","비웃다","이력서"),
+  q("profit","이득","살충제","파견하다","빼다"),
+  q("discover","발견하다","예측하다","생각해내다","결점"),
+  q("distant","먼","견본","어둠침침한","하위의"),
+  q("perseverance","끈기","엄격한","전원일치의","친척"),
+  q("complete","끝내다","소중히 하다","경멸","엄밀히 조사하다"),
+  q("disappoint","실망시키다","굶주리다","가뭄","황량한"),
+  q("patience","인내","저장","행위","습기"),
+  q("attitude","자세","~을 쫓아버리다","흡수하다","갑작스러운"),
+];
+
+VOCAB[5] = [
+  q("decline","거절하다","영양실조","의류","튀다"),
+  q("graduate","졸업하다","검사하다","소매","매우드문"),
+  q("academic","학문의","사상자","천직","비율"),
+  q("access","접근","일시적인","유죄를 선고하다","후한"),
+  q("attend","출석하다","허드렛 일","대기","복권"),
+  q("decorate","장식하다","직유","연속","숫자"),
+  q("diminish","줄다","이혼","맞바꾸다","비서"),
+  q("destroy","파괴하다","안정된","기르다","포용하다"),
+  q("suggest","제안하다","조종하다","예의 바른","상냥한"),
+  q("attract","끌다","불꽃","달라붙다","희미한"),
+  q("depressed","낙담한","공동으로 일하다","유명한","열망하는"),
+  q("propose","제안하다","영향","오만한","실망시키다"),
+  q("decrease","감소","깜짝 놀라게 하다","포즈","물러나다"),
+  q("devastate","황폐화시키다","영예로운","처리","봉투"),
+  q("fascinate","매료시키다","곤경","~에 복종하다","갑작스러운"),
+  q("emerge","나오다","강박적인","억누르다","식민지"),
+  q("employ","고용하다","기구","심부름","비틀거리다"),
+  q("define","정의하다","사투리","침입하다","겁을 먹은"),
+  q("violate","위반하다","전망","초조한","동의어"),
+  q("mechanic","기계공","난처하게 하다","채택하다","명성"),
+  q("hire","고용하다","정신적인","끄덕이다","살금살금 들어오다"),
+  q("reduce","감소시키다","할당하다","사막","폭로하다"),
+  q("status","지위","의식하고 있는","아주 훌륭한","면역된"),
+  q("rush","돌진하다","예견하다","경계","전망"),
+  q("passionate","열렬한","~의 탓으로 돌리다","거절하다","드문드문한"),
+  q("convenient","편리한","비용","공급하다","가전제품"),
+  q("demonstrate","논증하다","생각해내다","혼동하다","꽃"),
+  q("conscious","의식하고 있는","문지르다","절다","영양분을 주다"),
+  q("recruit","채용하다","분류하다","종","보험"),
+  q("illustrate","설명하다","일시적인","뿌리다","다 써버리다"),
+  q("surroundings","주위","맡기다","되풀이하는","종"),
+  q("resist","저항하다","동상","완전한","해부"),
+];
+
+VOCAB[6] = [
+  q("architect","건축가","빠른","휴대할수 있는","꽃가루"),
+  q("efficient","효율적인","제도","불경기","매우 귀중한"),
+  q("compete","경쟁하다","만족시키다","경험적인","기대하다"),
+  q("contrary","반대의","시행하다","중단하다","보충하다"),
+  q("manufacture","제조하다","가사","신의","우주비행사"),
+  q("emphasize","강조하다","선언하다","말에 타다","전술"),
+  q("diverse","다양한","순간적인","기념품","상호작용하다"),
+  q("delight","기쁨","원정","제조하다","받다"),
+  q("arrange","준비하다","여명","조직하다","기부하다"),
+  q("contribute","기부하다","부서지기 쉬운","실험실","충돌하다"),
+  q("indicate","가리키다","활용하다","유창한","길을 잃은"),
+  q("weaken","약화시키다","산산이 부서지다","금기","도둑"),
+  q("donate","기부하다","가설","화려한","토론"),
+  q("aim","목표","비추다","반사하다","충돌하다"),
+  q("admire","존경하다","흡입하다","재해","재채기하다"),
+  q("circumstance","주위의 사정","향수","묘사하다","억압하다"),
+  q("mount","말에 타다","별개의","예의범절","식민지"),
+  q("nervous","초조한","특권","거절하다","~을 위협하다"),
+  q("particle","소량","공격적인","재산","수술을 받다"),
+  q("contend","~와 겨루다","야망","결과","문명화하다"),
+  q("organize","조직하다","새롭게 하다","고통을 겪다","구조"),
+  q("intend","의도하다","거래","본사","제안하다"),
+  q("recognize","인정하다","상업의","풀을 먹다","결심하다"),
+  q("content","내용","전문적 기술","현저한","발산하다"),
+  q("purpose","목적","왈칵 흘러나오다","흔들리다","바다표범"),
+  q("identify","정체를 밝히다","소생하다","문지르다","목표"),
+  q("instruct","지시하다","발효시키다","추천하다","핥다"),
+  q("commercial","상업의","유형의","일시적인","받다"),
+  q("costume","의상","내보이다","한가롭게 거닐다","등록하다"),
+  q("establish","설립하다","주의","혼잡","공연하다"),
+  q("respect","존경","겁쟁이","확인하다","냉장하다"),
+  q("confident","자신있는","대사","숨기다","합성물"),
+];
+
+VOCAB[7] = [
+  q("conclude","결론을 내리다","허락하다","바꾸다","자존심"),
+  q("refer","언급하다","이혼","항해","속이다"),
+  q("stuff","재료","부정행위하다","만족시키다","벗어나다"),
+  q("brilliant","찬란한","바꾸어 말하다","추정하다","주장"),
+  q("victim","희생","심한 고통","폭로하다","허영심이 강한"),
+  q("primate","영장류","타원형","명백한","흥겹게하다"),
+  q("surface","표면","의류","움츠리다","빼앗다"),
+  q("substance","물질","오만한","광대한","정당화하다"),
+  q("crucial","중대한","적응시키다","형제자매","발견하다"),
+  q("vital","생명의","촉진하다","설득하다","빠지다"),
+  q("display","전시하다","동맹하다","상상하다","덜다"),
+  q("fiction","소설","아는사람","더럽히다","방송"),
+  q("satisfy","만족시키다","평형","추론하다","구경꾼"),
+  q("undergo","수술을 받다","감정 이입","목적지","도구"),
+  q("moral","도덕적인","책략","하품하다","생략하다"),
+  q("rare","매우드문","침입하다","단백질","낭송하다"),
+  q("harmony","일치","놀라다","흉내내다","외치다"),
+  q("launch","진수시키다","편향된","독","굴러 떨어지다"),
+  q("material","재료","가치있는","경작하다","직유"),
+  q("species","종","현미경","가능성이 있는","결과"),
+  q("introduce","소개하다","오도하는","불필요한","시도"),
+  q("agency","대리점","이야기하다","~에 익숙해진","증발시키다"),
+  q("clue","실마리","최고의","비어있는","한뼘"),
+  q("suffer","고통을 겪다","필사적인","위엄 있는","올라가다"),
+  q("luxury","사치","목적지","물방울을 떨어뜨리다","최고의"),
+  q("mammal","포유동물","고체의","기부하다","결심하다"),
+  q("verbal","말의","잡아채다","살다","상업의"),
+  q("obtain","얻다","팽창시키다","처형하다","방수의"),
+  q("essential","필수적인","연속적인","높이다","가설"),
+  q("indispensable","절대 필요한","동등한","끈기","말에 타다"),
+  q("qualification","자격","동요시키다","관여하다","천직"),
+  q("peel","껍질을 벗기다","성분","인정하다","조상"),
+];
+
+VOCAB[8] = [
+  q("apologize","사과하다","추론하다","겸손한","바다표범"),
+  q("imply","내포하다","내부의","전기","청년기"),
+  q("bulb","전구","학회","위생의","빼다"),
+  q("neat","말끔한","알리다","속이 빈","아주 멋진"),
+  q("consist","~에 존재하다","독립한","눈살을 찌푸리다","채식주의자"),
+  q("seek","추구하다","굴욕을 느끼게하다","달의","~을 능가하다"),
+  q("ripple","잔물결이 일다","높이다","적합한","달라붙다"),
+  q("regret","유감","옷감","~와 동행하다","(불 등을) 끄다"),
+  q("genius","천재","끼워 넣다","짜내다","분출하다"),
+  q("release","해방하다","고아","직유","인식의"),
+  q("relieve","덜다","배","적성","상품"),
+  q("consult","상의하다","인접하다","투명한","미친듯한"),
+  q("profession","전문직","일그러지게하다","이민 오다","남자다운"),
+  q("acquaintance","아는사람","위도","경영간부","소용돌이치다"),
+  q("gravity","중력","기계류","상속하다","필요로 하다"),
+  q("mention","언급하다","죽을 운명의","비율","제지하다"),
+  q("revolution","혁명","재해","위험","근본적인"),
+  q("intellect","지성","습기","그만두게 하다","계속유지하다"),
+  q("specific","특수한","오래 견디는","희미해지다","제정신의"),
+  q("defeat","쳐부수다","운반하다","독","주창하다"),
+  q("simultaneous","동시의","통화","증인","지지하다"),
+  q("ecosystem","생태계","바치다","복수","조각하다"),
+  q("margin","여백","격려하다","제정신의","증발시키다"),
+  q("distinct","별개의","성별","투자하다","겁나게 하다"),
+  q("alleviate","고통을 덜다","고통을 겪다","호화로운","남자다운"),
+  q("pursue","추구하다","교외","치명적인","오도하는"),
+  q("legend","전설","파괴하다","미덕","넓이"),
+  q("companion","친구","운동량","상원 의원","엄격한"),
+  q("innovate","혁신하다","흡수하다","탄소","축하연"),
+  q("occupation","직업","토론","정복하다","무작위의"),
+  q("electricity","전기","물을 튀기다","길을 찾다","만기가 되다"),
+  q("civilize","문명화하다","범죄자","장기간에 걸친","미끄러지다"),
+];
+
+VOCAB[9] = [
+  q("majority","대다수","비웃다","동요시키다","침식하다"),
+  q("bubble","풍선","수입","비교하다","주의를 흩뜨리다"),
+  q("wrap","포장하다","학회","결점","먹이"),
+  q("habitat","서식지","전기","신음","항해"),
+  q("relate","이야기하다","조직하다","무작위의","훈육하다"),
+  q("associate","연상하다","극단적인","수소","작동시키다"),
+  q("respond","반응하다","쓸모없는","소리치다","장식하다"),
+  q("appliance","가전제품","불쑥 나타나다","(정부의)부서","부재"),
+  q("stable","안정된","길을 잃은","밀수하다","교외"),
+  q("witness","증인","자극하다","신체의","언급하다"),
+  q("compound","합성물","협력하다","계속유지하다","예고"),
+  q("celebrate","축하하다","낙천주의자","조약","매료시키다"),
+  q("perceive","지각하다","타고난","난파","사과하다"),
+  q("jury","배심원단","열의","계속유지하다","발산하다"),
+  q("consistent","일관성있는","상","해골","바꾸다"),
+  q("react","반응하다","부분적인","묘사하다","영속하는"),
+  q("testimony","증언","기부하다","확신시키다","불모의"),
+  q("grocery","식료품점","관리하다","완전한","거대한"),
+  q("glacier","빙하","완전한","정상","지친"),
+  q("constant","끊임없는","원초적인","달래다","소유하다"),
+  q("equipment","설비","저항하다","파멸하다","향상시키다"),
+  q("slightly","약간","결정하다","사임하다","허락하다"),
+  q("conserve","보존하다","넓이","향기","항해"),
+  q("perpetual","영속하는","흥겹게하다","대사","이혼"),
+  q("absorb","흡수하다","거절하다","즉석에서 하다","검색하다"),
+  q("judge","재판관","끝내다","아는사람","시간을 엄수하는"),
+  q("detect","발견하다","현상","설명하다","질질끌다"),
+  q("verdict","(배심원의) 평결","누출","좋은기회","부족"),
+  q("fame","명성","물물교환","배열","자비로운"),
+  q("confront","직면하다","돌다","전념하다","시간을 엄수하는"),
+  q("assemble","모으다","가설","관계가 있다","상관관계"),
+  q("athlete","운동선수","적당한","열렬한","대체하다"),
+];
+
+VOCAB[10] = [
+  q("integrate","통합하다","맞바꾸다","뜨다","방수의"),
+  q("install","설치하다","신속한","해석하다","직경"),
+  q("gradual","점진적인","거주시키다","진화하다","모이다"),
+  q("gigantic","거대한","~을 위협하다","제정신의","배반하다"),
+  q("immense","거대한","타당한","견본","쓸다"),
+  q("suburb","교외","침투하다","닦다","아담한"),
+  q("exhaust","다 써버리다","이용할 수 있는","분류하다","이방인"),
+  q("tremendous","엄청난","진화하다","완고한","비어있는"),
+  q("literate","읽고 쓸 줄 아는","정제하다","허락하다","벌하다"),
+  q("assimilate","동화하다","현미경","정상의","묘사하다"),
+  q("insurance","보험","위반하다","재간있는","독재자"),
+  q("combine","결합시키다","충분한","식민지","미개한"),
+  q("rural","전원의","전신","먼","작동시키다"),
+  q("vast","광대한","뚜렷한","주위의 사정","원기왕성한"),
+  q("massive","육중한","내포하다","상냥한","닮다"),
+  q("literary","문학의","약속","임박한","숙달된"),
+  q("innocent","결백한","타원형","열정적인","반대하다"),
+  q("valid","타당한","번역하다","추상적인","되돌려주다"),
+  q("mature","성숙한","수술을 받다","쓰레기","항생 물질"),
+  q("enormous","거대한","시들다","경영간부","승리"),
+  q("vibrate","흔들리다","조종하다","등식화하다","소멸하다"),
+  q("punish","벌하다","발휘하다","온도계","영향을 미치다"),
+  q("marine","바다의","저항하다","약탈자","단언하다"),
+  q("scenery","풍경","앞서다","발생하다","산문"),
+  q("ethics","윤리","가로채다","실마리","건축가"),
+  q("literal","문자 그대로의","길을 찾다","노력하다","대사"),
+  q("routine","일상의 일","폭군","대사","허드렛 일"),
+  q("ultimate","최후의","더미","이중 언어 사용자의","주식"),
+  q("addict","중독자","내용","절망","남용하다"),
+  q("unify","통일하다","조종하다","힐끗 보기","선망"),
+  q("merge","합병하다","살금살금 기다","매우 귀중한","유사성"),
+  q("urban","도시의","건설하다","비관론자","범위"),
+];
+
+// Days 11-55: generate with key distractors from PDF data
+// For brevity, using representative distractors based on actual PDF content
+
+function makeDay(words) {
+  // words: array of [en, ko, d2, d3, d4]
+  return words.map(w => q(w[0], w[1], w[2], w[3], w[4]));
+}
+
+VOCAB[11] = makeDay([
+  ["trap","덫","식용의","겁많은","견본"],["steal","훔치다","식별하다","부패","영원한"],
+  ["debate","토론","유혹하다","들어감","선망"],["territory","영토","깨우다","즐겁게하다","부족한"],
+  ["appeal","호소하다","자치권","이성적인","냉장하다"],["controversy","논쟁","총계의","관점","소멸하다"],
+  ["myth","근거없는 이야기","음침한","차지하다","힐끗 보기"],["embarrass","난처하게 하다","차별하다","결점","산들바람"],
+  ["emit","발산하다","확보하다","갱신하다","뒤쫓다"],["suppose","생각하다","허영심이 강한","자유","세탁소"],
+  ["vegetarian","채식주의자","풀을 먹다","복잡한","저항하다"],["weave","짜다","솔선","보장하다","경계"],
+  ["durable","오래 견디는","기르다","풀을 먹다","개시하다"],["craft","솜씨","길을 잃은","영향을 미치다","현저한"],
+  ["humiliate","굴욕을 느끼게하다","빠지다","범하다","전형적인"],["accurate","정확한","성분","절대적인","알리다"],
+  ["interrupt","중단하다","발표하다","이국적인","사기"],["precise","정밀한","쓴","맞바꾸다","빼다"],
+  ["disturb","방해하다","(안내광고용) 책자","감옥","길을 찾다"],["cure","치료하다","관점","호되게 꾸짖다","~하기 쉬운"],
+  ["dominate","지배하다","함께 나누다","비난하다","빼다"],["reverse","반대의","떠돌아다니다","말을 더듬다","휘젓다"],
+  ["assume","추정하다","무한한","피로","개시하다"],["enroll","등록하다","물속에 잠기게 하다","의사소통하다","무관심한"],
+  ["destination","목적지","비추다","전속력으로 달리다","남을 괴롭히다"],["stir","휘젓다","제지하다","감각이 없는","사람들"],
+  ["atmosphere","대기","더럽히다","형제자매","방해"],["illusion","환상","호되게 꾸짖다","펴다","방향"],
+  ["conflict","~와 충돌하다","짜다","우수한","살다"],["dispute","토론","선거하다","폭발하다","긴장"],
+  ["restrict","제한하다","발효시키다","학회","내려가다"],["misconception","그릇된 인식","발표하다","흥겹게하다","매달다"],
+]);
+
+VOCAB[12] = makeDay([
+  ["squeeze","짜내다","찌르다","바꾸다","투명한"],["symptom","증상","~하기 쉬운","약화시키다","긁다"],
+  ["erect","세우다","소설","침투하다","거주하다"],["transmit","보내다","빈번한","~을 구성하다","보상"],
+  ["draft","원고","현미경","평형","모으다"],["ingredient","성분","중요한","반짝이다","생물의 조직"],
+  ["terrify","겁나게 하다","매우드문","구조","움직이지 못하게하다"],["identical","동일한","재채기하다","부딪히다","대응하는 사람"],
+  ["scare","놀라게 하다","깊은 인상을 주다","장점","묵상하다"],["demolish","부수다","저명한","뒤","채식주의자"],
+  ["coordinate","조정하다","애벌레","과장하다","진정한"],["justify","정당화하다","주목하다","영토","현상"],
+  ["questionnaire","질문지","경배하다","결속","이해하다"],["primitive","원시적인","전술","충돌하다","임박한"],
+  ["miserable","비참한","사기","높이다","단서"],["strategy","전략","가장자리","휴양","~하지 않는"],
+  ["construct","건설하다","오염시키다","치명적인","이방인"],["edition","판","포위하다","애정","고통을 가하다"],
+  ["gloomy","우울한","(시각기억등이) 흐림","무너지다","연상하다"],["protest","항의","산마루","채택하다","사치"],
+  ["publish","출판하다","(유령이)출몰하다","밀어 올리다","상상하다"],["dispose","처리","세탁소","양심","넓이"],
+  ["temper","기질","진압하다","어린이다운","개혁"],["diligent","부지런한","병","눈을 깜박이다","구부리다"],
+  ["philosophy","철학","냉장하다","들리는","속이 빈"],["interact","상호작용하다","초조한","수리하다","진압하다"],
+  ["budget","예산","고체의","극작가","벌하다"],["exhibit","전시하다","부정행위하다","조각","파멸하다"],
+  ["moderate","적당한","접촉","~의 탓으로 돌리다","펴다"],["insight","통찰력","항해","실망시키다","직물"],
+  ["endure","견디어내다","소생하다","수용하다","명백한"],["frighten","무섭게 하다","특권","해부","약화시키다"],
+]);
+
+VOCAB[13] = makeDay([
+  ["burden","부담","냄새를 맡다","기도하다","건축가"],["trace","흔적","구별하다","속이다","(물건.장소를) 둘러싸다"],
+  ["significant","중요한","제안하다","중대한","(유령이)출몰하다"],["flap","날개를 퍼덕이다","수직의","고함치다","막다"],
+  ["guilt","죄책감","치명적인","등식화하다","충돌하다"],["underlying","밑에 깔린","깊은 인상을 주다","심사 숙고하다","열대 지방의"],
+  ["confuse","혼동하다","남아도는","구매","휴양"],["mystify","마음을 혼미하게 하다","기대다","성난","폭군"],
+  ["elementary","초등의","포즈","철저한","구멍을 내다"],["solitary","고독한","말에 타다","견디어내다","재산"],
+  ["locate","위치를 파악하다","알리다","망원경","만기가 되다"],["broadcast","방송","주장하다","대통령의 지위","전설"],
+  ["notable","주목할 만한","직경","습기있는","의류"],["comprehend","이해하다","발산하다","움켜쥐다","경험적인"],
+  ["perplex","당혹케하다","대사","스며들다","불평하다"],["argument","주장","펴다","적법한","논박하다"],
+  ["ancestor","조상","버리다","반응하다","굽다"],["proverb","속담","멸종한","부분적인","~이 되게하다"],
+  ["tropic","열대 지방의","훑어보다","미개한","영원한"],["track","통로","당황하게하다","생각하다","경영간부"],
+  ["contaminate","오염시키다","속이다","선망","친구"],["muscle","근육","약화시키다","금지하다","부과하다"],
+  ["scatter","뿌리다","짜다","그만두다","속담"],["radical","근본적인","퇴직하다","성큼성큼 걷다","유독한"],
+  ["aboard","배 위에","육중한","배심원단","지질학"],["ambition","야망","자격","희미해지다","남용하다"],
+  ["bewilder","당황하게 하다","탐험하다","대략의","고독한"],["pollute","오염시키다","뛰어난","포기하다","동전"],
+  ["folk","사람들","부지런한","소홀히 하다","알리다"],["fundamental","근본적인","가치있는","타당한","약한"],
+  ["grateful","감사하는","다양한","다가오는","촉구하다"],["worthwhile","가치있는","신음하다","(안내광고용) 책자","수수께끼"],
+]);
+
+VOCAB[14] = makeDay([
+  ["celebrity","유명인","규제하다","평가","타당한"],["scratch","긁다","발산하다","해방하다","당혹케하다"],
+  ["contemporary","동시대의","중요한","큰 슬픔","위험"],["recite","낭송하다","풍경","(유령이)출몰하다","장식하다"],
+  ["laboratory","실험실","승리","더미","하위의"],["prevail","보편화 되다","성분","정확한","익다"],
+  ["executive","경영간부","채식주의자","잘 다루다","제지하다"],["afford","여유가 있다","고상한","흘리다","분명히 하다"],
+  ["infer","추론하다","이혼","고통을 주다","(1회의)복용량"],["inherit","상속하다","분별있는","전시하다","끈기"],
+  ["grant","허락하다","붙잡다","원고","조리법"],["aid","돕다","수입","공포","더럽히다"],
+  ["annual","연간의","습기있는","피할 수 없는","정직한"],["correspond","일치하다","성분","은신처","눌러 부수다"],
+  ["permit","허락하다","엄밀히 조사하다","방향","성숙한"],["deliberate","신중한","진짜의","보상","바치다"],
+  ["scarce","부족한","중요한","외치다","낭송하다"],["evolve","진화하다","사상자","의심하다","구제책"],
+  ["current","흐름","금기","개척자","경직된"],["prohibit","금지하다","인접하다","확보하다","방아쇠"],
+  ["annoy","화나게하다","이기적인","도둑","상"],["irritate","짜증나게 하다","사기","내과의사","금지하다"],
+  ["restore","되돌려주다","돕다","임차인","도구"],["prior","먼저의","경직된","복지","육체 노동의"],
+  ["stun","실신시키다","반구","금기","혐오하다"],["cooperate","협력하다","생각하다","상호작용하다","흐느끼다"],
+  ["progress","전진하다","진수시키다","제출하다","습기있는"],["previous","이전의","습기","이해하다","임명하다"],
+  ["forbid","금지하다","일상의 일","표면의","신중한"],["assist","돕다","뒤섞다","내과의사","허락하다"],
+  ["infect","감염시키다","관계가 있다","삼가다","빼다"],["caterpillar","애벌레","살다","정직한","이혼"],
+]);
+
+VOCAB[15] = makeDay([
+  ["ordinary","보통의","음침한","즉시의","내보이다"],["eliminate","제거하다","단순화하다","능력있는","상냥한"],
+  ["typical","전형적인","물에 빠져 죽다","끊임없는","섭취"],["infant","유아","추방하다","따라잡다","석유"],
+  ["democracy","민주주의","관련있는","사기","자비로운"],["mutual","상호의","믿을 수 있는","분석하다","중세의"],
+  ["calculate","추정하다","종결하다","황제","여성"],["nurture","기르다","비참한","계속 ~하다","토론"],
+  ["astonish","놀라게 하다","구부리다","표류하다","직면하다"],["recipe","조리법","희미한","폐렴","손상되지 않은"],
+  ["startle","깜짝 놀라게 하다","공급하다","읽고 쓸 줄 아는","굉장히 멋진"],["consequence","결과","저항할 수 없는","관계가 있다","예고"],
+  ["conquer","정복하다","자극하다","위험","쪼개다"],["digest","소화하다","쳐부수다","가장자리","운명"],
+  ["desperate","필사적인","고립시키다","영예로운","재산"],["extraordinary","이상한","준비하다","깜짝 놀라게 하다","합의"],
+  ["discard","버리다","세균","인용하다","주름지다"],["overlook","내려다보다","잔물결이 일다","구체적으로 표현하다","순진한"],
+  ["amaze","놀라게 하다","장난","흉내내다","기부하다"],["willing","기꺼이 ~하는","영예로운","열망하다","적당한"],
+  ["outcome","결과","짐승의","나오다","상품"],["reserve","예약하다","화산","(주조용의) 틀","계속유지하다"],
+  ["resolve","결심하다","대화하다","재료","조심"],["continent","대륙","구별하다","낭송하다","떠돌아다니다"],
+  ["shed","흘리다","풍경","대리점","(주조용의) 틀"],["bud","꽃봉오리","풍선","~하기 쉬운","혼잡"],
+  ["overwhelm","압도하다","사기","옷감","기념비"],["reluctant","마지못해 하는","고도","큰 슬픔","상상하다"],
+  ["precious","귀중한","작은 사건","끊임없는","~에 존재하다"],["committee","위원회","인정하다","맡기다","정체를 밝히다"],
+  ["remove","제거하다","영원한","느슨한","감소"],["invisible","보이지 않는","굽다","독","기계류"],
+]);
+
+VOCAB[16] = makeDay([
+  ["instrument","기구","파멸하다","예상하다","떨다"],["acquire","얻다","부풀리다","책임을 지다","증기"],
+  ["objective","목표의","목적지","구체적인","추천하다"],["infinite","무한한","사임하다","서식지","발휘하다"],
+  ["exceed","초과하다","개척자","배관공","총계의"],["distract","주의를 흩뜨리다","제지하다","엄격한","도약"],
+  ["utensil","도구","울다","쓰레기매립지","시간을 엄수하는"],["monotonous","단조로운","졸업하다","치수","문자 그대로의"],
+  ["purchase","구매","강박적인","동경하다","뒤"],["nutrition","영양","순진한","연약한","삭제하다"],
+  ["manual","육체 노동의","길을 잃다","추천하다","결론을 내리다"],["manipulate","조종하다","건축가","허락하다","큰배"],
+  ["polish","닦다","질투하는","악명높은","친밀한"],["reproduce","복제하다","쾅닫다","더럽히다","아주 좋아하다"],
+  ["malnutrition","영양실조","늘리다","제정신의","전구"],["investigate","조사하다","보증하다","전부의","그릇된 인식"],
+  ["survey","조사","처방하다","유창한","속담"],["abroad","외국으로","고체의","감상적인","풍요하게하다"],
+  ["overcome","극복하다","얼다","박살내다","고민"],["subjective","주관적인","소생하다","통로","수용하다"],
+  ["reputation","평판","국경","파견하다","한가롭게 거닐다"],["abuse","남용하다","살금살금 들어오다","신선하지 않은","화려한"],
+  ["poll","여론조사","고도","저장","접촉"],["impulse","충동","매달리다","풀을 먹다","대체하다"],
+  ["explore","탐험하다","공개하다","엄숙한","적법한"],["nod","끄덕이다","고통을 주다","격렬한","예의 바른"],
+  ["capable","능력있는","여론조사","버림받은","흐느끼다"],["breed","번식하다","포용하다","정부 보조금","현저한"],
+  ["persist","계속 ~하다","공식화하다","세탁소","경악"],["proficient","숙달된","응시하다","스며들다","덫"],
+  ["bend","구부리다","예고","범죄자","연금"],["absence","부재","문명화하다","처음의","엄숙한"],
+]);
+
+VOCAB[17] = makeDay([
+  ["curriculum","교과 과정","튀다","부수다","증기"],["accustomed","~에 익숙해진","이해하다","은신처","제의하다"],
+  ["cherish","소중히 하다","상호작용하다","재발하다","해임"],["attribute","~의 탓으로 돌리다","방수의","연기하다","예상하다"],
+  ["enclose","(물건.장소를) 둘러싸다","극작가","원시적인","솜씨"],["plausible","그럴듯한","역경","(유령이)출몰하다","기대하다"],
+  ["pat","가볍게 두드리다","조각하다","진단하다","집회"],["export","수출하다","꽃","호화로운","기꺼이 ~하는"],
+  ["deprive","빼앗다","능력있는","아주 멋진","물에 빠져 죽다"],["invaluable","매우 귀중한","결합","추천하다","부과하다"],
+  ["classify","분류하다","말을 더듬다","추방하다","벗어나다"],["refresh","새롭게 하다","관념","신용할 수 있는","(대학의) 학부"],
+  ["confine","제한하다","식료품점","제공하다","변경하다"],["barely","~하지 않는","흔들리다","독립한","인질"],
+  ["derive","끌어내다","불경기","열정적인","덫"],["instinct","본능","과감한","중대한","여성"],
+  ["swift","빠른","사인","휴양지","순항하다"],["credible","신용할 수 있는","외치다","느슨한","제의하다"],
+  ["recover","회복하다","사기","공연하다","조각"],["foster","촉진하다","구성하다","흐느끼다","절다"],
+  ["horror","공포의","그만두다","이성적인","받다"],["deceive","속이다","특권","발음하다","귀중한"],
+  ["promote","촉진하다","~을 면밀히 조사하다","지구의","여유가 있다"],["incredible","믿을수 없는","고치다","변천","공급하다"],
+  ["recreation","휴양","일치하다","휘젓다","주고받기"],["import","수입","육체 노동의","전형적인","관개하다"],
+  ["maintain","유지하다","해골","~을 위협하다","주요한"],["headquarter","본사","무언의","해임","두근거리다"],
+  ["sustain","유지하다","붙잡다","선언하다","자격"],["intuition","직관","근본적인","강화하다","~하기쉬운"],
+  ["rapid","빠른","심한 고통","그만두게 하다","고체의"],["heal","치유하다","모으다","열대 지방의","비참한"],
+]);
+
+VOCAB[18] = makeDay([
+  ["affluence","풍족","투명한","연상하다","엄청난"],["noble","고상한","잡아채다","묘사하다","비난하다"],
+  ["storage","저장","비틀거리다","임금","빨갛게 불타다"],["grumble","불평하다","격려하다","내보이다","혼동하다"],
+  ["passive","소극적인","~을 위협하다","죽을 운명의","고통을 덜다"],["rid","제거하다","회사","~을 대신하다","아주 좋아하다"],
+  ["urgent","긴급한","표면의","반란을 일으키다","연금"],["possess","소유하다","도구","도박하다","물에 빠져 죽다"],
+  ["register","등록하다","선사시대의","평판","응시하다"],["invest","투자하다","중립의","비교하다","형제자매"],
+  ["stimulate","자극하다","표류하다","악덕","해"],["distort","일그러지게하다","사서","필수적인","저명한"],
+  ["currency","통화","경악","남용하다","생각해내다"],["initiative","솔선","설비","엎지르다","타격"],
+  ["welfare","복지","침투하다","이해하다","도덕적인"],["pose","포즈","되돌려주다","일치하다","부과하다"],
+  ["complain","불평하다","압도하다","대통령의 지위","동정"],["awake","깨우다","거대한","집회","썩다"],
+  ["era","시대","절연하다","역경","엄격한"],["wealth","부","무언의","세련된","보존하다"],
+  ["medieval","중세의","기구","그럴듯한","대응하는 사람"],["ripen","익다","신의","직면하다","포기하다"],
+  ["historical","역사의","인종의","바다표범","반짝이다"],["prehistoric","선사시대의","성큼성큼 걷다","~에 존재하다","감염시키다"],
+  ["intimate","친밀한","~을 능가하다","격노","시작하다"],["prolong","연장하다","거대한","변하다","제한하다"],
+  ["immune","면역된","긴급한","충분한","주입하다"],["spectacle","장관","~을 능가하다","아주 멋진","호소하다"],
+  ["moan","신음","분배하다","정밀한","전원의"],["extend","늘리다","조사하다","애정","묘사하다"],
+  ["inspire","고무시키다","토론","꽃","경멸"],["motivate","동기를 부여하다","비용","총계의","축하연"],
+]);
+
+VOCAB[19] = makeDay([
+  ["triumph","승리","동정","주위의 사정","암호화하다"],["self-esteem","자존심","그만두게 하다","고도","병"],
+  ["subtle","미묘한","증인","휴대할수 있는","결합시키다"],["constrain","제한하다","유전자","느슨한","포기하다"],
+  ["secretary","비서","옷감","진압하다","선사시대의"],["dictate","받아쓰기를 하다","흐느끼다","나란한","화해시키다"],
+  ["browse","검색하다","규칙적인","끊임없는","변호사"],["freeze","얼다","철학","비서","극지의"],
+  ["pioneer","개척자","~를 가속화하다","반란을 일으키다","위반하다"],["affection","애정","유리한 점","집중하다","성취하다"],
+  ["evident","눈에 잘띄는","후한","사막","목표의"],["shiver","추위로 떨다","어린이다운","악순환","미끄러짐"],
+  ["initial","처음의","분배하다","위험","기대하다"],["assure","확신시키다","줄다","~을 쫓아버리다","부분"],
+  ["endeavor","노력","수확","모조","내용"],["apparent","분명한","혼란에 빠뜨리다","전술","짐승의"],
+  ["commit","범하다","용서하다","고소하다","풀을 먹다"],["isolate","고립시키다","갈채","직유","초등의"],
+  ["anchor","닻","포장하다","절름발이의","버리다"],["struggle","투쟁","즐겁게하다","결정하다","깜짝 놀라게 하다"],
+  ["strive","노력하다","후원자","막다","산문"],["machinery","기계류","금융","천직","엄청난"],
+  ["tremble","떨다","원기왕성한","풍부하다","치수"],["edible","식용의","가리키다","쪼개다","긍정적인"],
+  ["obvious","명백한","지원자","최후의","큰배"],["rescue","구조","통치하다","저항할 수 없는","조정하다"],
+  ["sequence","연속","대참사","분별있는","조잡한"],["tender","상냥한","광대한","고무시키다","운반하다"],
+  ["guarantee","보증하다","~에 존재하다","바다의","재"],["colony","식민지","상업의","덫","거주시키다"],
+  ["aptitude","적성","가리키다","동맹하다","억지로 시키다"],["segregate","차별하다","빼다","돌진하다","떠나다"],
+]);
+
+VOCAB[20] = makeDay([
+  ["retrospect","회상","뇌물","문자 그대로의","용서하다"],["insist","주장하다","고문","당혹케하다","돌아다니다"],
+  ["panic","공포","이국적인","충실한","수술을 받다"],["deposit","맡기다","비관론자","고체의","불명료한"],
+  ["graze","풀을 먹다","큰 슬픔","흉내내다","절연하다"],["compliment","칭찬","뽑다","통근하다","참가하다"],
+  ["assert","단언하다","편리한","살다","얻다"],["acclaim","갈채","충돌하다","정부 보조금","위치를 파악하다"],
+  ["omit","생략하다","위치를 파악하다","외과의사","투자하다"],["lessen","감소하다","즐겁게하다","구매","외과의사"],
+  ["carve","조각하다","무언의","집중하다","침식하다"],["meadow","목초지","타고난","쓴","함께 나누다"],
+  ["privilege","특권","물방울을 떨어뜨리다","사로잡히다","튀다"],["affirm","단언하다","아담한","고통을 주다","접근"],
+  ["pave","(도로를)포장하다","천직","관점","집중하다"],["scold","꾸짖다","부패","근육","버리다"],
+  ["theory","이론","병","고용하다","나누다"],["hinder","막다","지시하다","포유동물","과감한"],
+  ["signature","서명","인용하다","정교한","대체하다"],["reservoir","저수지","도구","휴양","전원일치의"],
+  ["autograph","사인","열등한","포위하다","정당화하다"],["sacrifice","희생","지탱하다","승인하다","서식지"],
+  ["disgrace","불명예","살짝 담그다","도를 넘지 않는","추정하다"],["inhibit","억누르다","압도하다","유명인","위로하다"],
+  ["hypothesis","가설","수소","경멸","성별"],["praise","칭찬하다","절대적인","영예로운","시도"],
+  ["prudent","사려 깊은","근본적인","풍선","행위"],["overtake","따라잡다","영원한","추구하다","움직이지 못하게하다"],
+  ["exception","예외","깊은 인상을 주다","수정하다","익다"],["sensible","분별있는","고함치다","남아도는","역사의"],
+  ["riddle","수수께끼","탄력 있는","(접촉)전염","오두막집"],["spiritual","정신적인","자랑하다","지구의","사려 깊은"],
+]);
+
+VOCAB[21] = makeDay([
+  ["numeral","숫자","적대하는","타격","저항할 수 없는"],["geology","지질학","속력","본능","섬광"],
+  ["elegant","우아한","평가하다","기쁨","(칼 등의) 날"],["length","길이","요새","식별하다","승인하다"],
+  ["hesitate","주저하다","전설","완고한","추정하다"],["pause","잠시 중지하다","구멍을 내다","기부하다","부패한"],
+  ["diffuse","발산하다","기도하다","사악한","섭취"],["refuse","거절하다","개요","안정된","마술을 부리다"],
+  ["diameter","직경","설득하여 ~시키다","구별하다","견디다"],["reject","거절하다","주의","판매자","쓰레기"],
+  ["stroke","타격","꽃","전시하다","왕위"],["resent","분개하다","칭찬","생각하다","중급의"],
+  ["astronaut","우주비행사","심판","영양분을 주다","~을 능가하다"],["forgive","용서하다","찍다","향수","물러나다"],
+  ["pronounce","발음하다","~하는 경향이 있다","여유가 있다","~와 겨루다"],["transition","변천","전형적인","식별하다","시행하다"],
+  ["resemble","닮다","찬란한","동맹하다","여백"],["distribute","분배하다","명백한","앞서다","접근"],
+  ["width","너비","~하는 경향이 있는","유형의","보충하다"],["artifact","인공유물","짜증나게 하다","외치다","접근"],
+  ["dispense","분배하다","무질서","묘사하다","황폐화시키다"],["marble","구슬","고통을 주다","유지하다","대참사"],
+  ["tribe","부족","유독한","황폐화시키다","함께 나누다"],["approve","승인하다","심한 고통","위치를 파악하다","경쟁하다"],
+  ["satellite","위성","숙달된","담그다","깨우다"],["revenge","복수","통합하다","추천하다","희생"],
+  ["cosmic","우주의","배반하다","예측하다","생태계"],["tissue","생물의 조직","싹이 돋다","외교관","대응하는 사람"],
+  ["dimension","치수","보완하다","야망","재판관"],["deserve","~할 가치가 있다","~를 가속화하다","불안","어린이다운"],
+  ["dense","빽빽한","고소하다","의사소통하다","방해"],["profound","심오한","견디어내다","아주 좋아하다","양조하다"],
+]);
+
+VOCAB[22] = makeDay([
+  ["superior","우수한","검사하다","영원한","인종의"],["prospect","전망","적당한","비교하다","진화하다"],
+  ["mediate","조정하다","하수","환대하는","튀다"],["despair","절망","주요한","추방하다","원시적인"],
+  ["vanish","사라지다","되풀이 하다","신속한","신의"],["ferment","발효시키다","결과","장식하다","고통을 겪다"],
+  ["desert","사막","거절하다","순진한","유행"],["trivial","하찮은","가라앉다","이론","견디어내다"],
+  ["blink","눈을 깜박이다","원초적인","감사함","물을 튀기다"],["roar","고함치다","허영심이 강한","지질학","능력있는"],
+  ["fade","희미해지다","공동체","진정한","길을 잃다"],["germ","세균","계속유지하다","결합","상원 의원"],
+  ["legitimate","합법의","수용하다","합성물","구멍을 내다"],["ensure","보장하다","침해하다","칭찬","의류"],
+  ["caution","조심","추방하다","도를 넘지 않는","소화하다"],["inferior","열등한","대화하다","영원한","침입하다"],
+  ["endanger","위태롭게하다","끊임없는","개별의","남을 괴롭히다"],["solid","고체의","전기","고안하다","쓸모없는"],
+  ["frown","눈살을 찌푸리다","살충제","번식하다","해임"],["scan","훑어보다","충분한","제거하다","옷감"],
+  ["excess","초과","대다수","놀리다","인접하다"],["gene","유전자","친구","스며들게 하다","면역된"],
+  ["dig","파다","깨우다","감옥","기근"],["abandon","버리다","먹이","유죄를 선고하다","진수시키다"],
+  ["legal","적법한","제출하다","시도","복지"],["neglect","소홀히 하다","기도하다","과감히~을 하다","동기를 부여하다"],
+  ["exploit","이용하다","공중을 맴돌다","조약","금지하다"],["orphan","고아","동정","용서하다","임대차 계약"],
+  ["intervene","중재하다","존경","할당하다","신선하지 않은"],["risk","위험","노력하다","분류하다","고안하다"],
+  ["exclaim","외치다","재판관","부딪히다","수소"],["surplus","남아도는","결합","주관적인","온도계"],
+]);
+
+VOCAB[23] = makeDay([
+  ["pity","동정","환대하는","잡아채다","알아채다"],["venture","과감히~을 하다","문지르다","포유동물","절름발이의"],
+  ["sympathy","동정","긴급한","별개의","재간있는"],["fierce","맹렬한","공동체","짜다","신중한"],
+  ["optimist","낙천주의자","흔적","엄숙한","예산"],["dwell","살다","세게하다","심사 숙고하다","사라지다"],
+  ["compassion","동정","성큼성큼 걷다","뒤","우주비행사"],["inhabit","살다","감옥","영원한","소비하다"],
+  ["forecast","예상하다","버리다","공식화하다","영향"],["symphony","교향곡","철저한","~하는 경향이 있는","타격"],
+  ["gossip","잡담","영토","문지르다","존경"],["warehouse","창고","흐름","썩다","사라지지 않다"],
+  ["pessimist","비관론자","강조하다","의무를 지우다","전념하다"],["reside","거주하다","의도하다","더 좋아하다","가능성이 있는"],
+  ["ritual","의식","(칼 등의) 날","협력하다","원정"],["convert","바꾸다","범위","간접적인","피로"],
+  ["magnify","확대하다","거만한","상품 진열대","꾸짖다"],["adapt","적응시키다","할당하다","채택하다","도박하다"],
+  ["adjust","조절하다","명성","다 써버리다","처방하다"],["snap","똑 부러짐","인정하다","갑작스러운","결합시키다"],
+  ["transfer","옮기다","고통을 겪다","아주 훌륭한","순항하다"],["occupy","차지하다","대응하는 사람","반대하다","대로"],
+  ["zeal","열의","기업체","통합하다","배관공"],["sew","꿰매다","물을 튀기다","희미한","증발시키다"],
+  ["embrace","포용하다","유혹하다","움츠리다","유지하다"],["indirect","간접적인","결점","화려한","일화"],
+  ["transform","바꾸다","궤도","운명","즐겁게하다"],["soar","높이날다","포유동물","허드렛 일","진단하다"],
+  ["inspect","검사하다","사실상의","종사하다","진공의"],["loose","느슨한","쓸모없는","연장하다","범위"],
+  ["predict","예측하다","허락하다","붙잡다","거둬들이다"],["tolerate","견디다","의도하다","학기","잡아채다"],
+]);
+
+VOCAB[24] = makeDay([
+  ["predator","약탈자","겁쟁이","노력","속삭임"],["interpret","해석하다","향수","고난","신용할 수 있는"],
+  ["exotic","이국적인","밀어 올리다","토론","개혁"],["intent","결심한","변호사","편집하다","장난"],
+  ["admit","인정하다","미묘한","도구","화물"],["prey","먹이","공식화하다","폭발하다","보장하다"],
+  ["translate","번역하다","섭취","개별의","막다"],["ridge","산마루","오만한","덫","열정적인"],
+  ["nourish","영양분을 주다","거절하다","간섭하다","매달리다"],["velocity","속력","기생충","항해","처방하다"],
+  ["wander","떠돌아다니다","매우 귀중한","경작하다","완고한"],["flip","튀기다","대조","의사소통하다","~의 탓으로 돌리다"],
+  ["persuade","설득하다","누출","위험","대응하는 사람"],["pedestrian","보행자","예상하다","발생하다","주장"],
+  ["mercy","자비","정신적인","근거없는 이야기","파멸하다"],["roam","돌아다니다","물을 빼다","거주시키다","수정하다"],
+  ["dedicate","전념하다","타고난","영원한","줄기"],["generous","후한","상대","가리키다","필수적인"],
+  ["retreat","물러나다","마침내","조심하다","마음을 혼미하게 하다"],["narrate","이야기하다","동시의","사실상의","선사시대의"],
+  ["disaster","재해","변천","강박적인","통치하다"],["tragedy","비극","조정하다","기어가다","추위로 떨다"],
+  ["imprint","찍다","간결한","감각이 없는","바치다"],["entry","들어감","실제의","재판관","적대하는"],
+  ["devote","바치다","관개하다","눈에 띄는","침식하다"],["whisper","속삭임","제한하다","얻다","사서"],
+  ["tame","길들이다","단순화하다","뜨다","자존심"],["vivid","생생한","방송","갈다","변천"],
+  ["strain","긴장","보편화 되다","제거하다","전형적인"],["acknowledge","인정하다","고통을 가하다","허영심이 강한","현저한"],
+  ["convince","납득시키다","음침한","반짝이다","철저한"],["catastrophe","대참사","결론을 내리다","치수","기념비"],
+]);
+
+VOCAB[25] = makeDay([
+  ["postpone","연기하다","속력","혁명","굶주리다"],["stock","주식","황제","학회","다 써버리다"],
+  ["scream","소리치다","만족시키다","함유하다","눈에 띄는"],["refund","반환","양심","장기간에 걸친","침을 뱉다"],
+  ["urge","촉구하다","견디다","사기","복지"],["negative","부정의","생태계","파견하다","심부름"],
+  ["imitate","모방하다","반구","오도하는","찌르다"],["momentum","운동량","자존심","결심한","미생물"],
+  ["delay","연기하다","잠시 중지하다","저수지","탄소"],["refrigerate","냉장하다","계약","사색하다","기념품"],
+  ["opponent","상대","운명","서약","문지르다"],["penalty","형벌","가설","의식","비판하다"],
+  ["vender","판매자","불러일으키다","중대한","도둑"],["lean","기대게하다","가장자리","정당화하다","낙천주의자"],
+  ["rebel","반란을 일으키다","닮다","자극하다","닦다"],["mimic","흉내내다","모으다","지질학","통로"],
+  ["yell","고함치다","두근거리다","고민","빠른"],["feast","축하연","짜다","닦다","설득하여 ~시키다"],
+  ["positive","긍정적인","들어감","뽑다","덫"],["portion","부분","어린이다운","서약하다","극작가"],
+  ["seal","바다표범","부딪히다","떨다","소생하다"],["erode","침식하다","다음의","되풀이하는","삼가다"],
+  ["shrug","움츠리다","분자","해골","언급하다"],["selfish","이기적인","인식의","역사의","문학의"],
+  ["irresistible","저항할 수 없는","추천하다","진압하다","발생하다"],["sane","제정신의","두근거리다","지배하다","오염시키다"],
+  ["superstition","미신","상의하다","원시적인","철저한"],["sewage","하수","저명한","흡수하다","구체적인"],
+  ["recommend","추천하다","주입하다","요리","세련된"],["equilibrium","평형","가리키다","구별하다","가짜의"],
+  ["exaggerate","과장하다","뒤섞다","질식시키다","마비시키다"],["proponent","옹호자","최고의","주관적인","전속력으로 달리다"],
+]);
+
+VOCAB[26] = makeDay([
+  ["beam","송신하다","버리다","지원자","고함치다"],["alien","이방인","상품","자외선","애정"],
+  ["bargain","싼물건","비극","미개한","보이지 않는"],["circulate","돌다","한모금","억누르다","수입"],
+  ["asset","자산","화폐의","연기하다","퇴직하다"],["elect","선거하다","해부","대통령의 지위","풍부하다"],
+  ["income","수입","예견하다","불평하다","죽을 운명의"],["supervise","감독하다","영향","모순되다","엄격한"],
+  ["assess","평가하다","(소리등을) 크게 하다","이중 언어 사용자의","화산"],["sweep","쓸다","조직하다","충격","생태계"],
+  ["drill","구멍을 내다","힘","부지런한","세균"],["colleague","동료","운명","억누르다","우아한"],
+  ["abundant","풍족한","예상하다","화석","복권"],["approximate","대략의","고아","인질","유죄를 선고하다"],
+  ["loyal","충실한","기대게하다","살다","균형"],["compulsive","강박적인","기부하다","끼워 넣다","위험"],
+  ["breeze","산들바람","분배하다","실신시키다","생각하다"],["regulate","규제하다","자랑하다","좋은기회","형제자매"],
+  ["wage","임금","고난","발생","솜씨"],["constitute","구성하다","과감히~을 하다","변호사","위치를 파악하다"],
+  ["subsidy","정부 보조금","다음의","약간","산업의"],["recall","상기하다","낙담한","층","유혹하다"],
+  ["scrub","문지르다","영양","장난","깨닫다"],["chief","주요한","수입","거주시키다","적당한"],
+  ["property","재산","부재","빼다","동기를 부여하다"],["evaluate","평가하다","새롭게 하다","전형적인","알리다"],
+  ["reliable","믿을 수 있는","예언","개시하다","살금살금 들어오다"],["cuisine","요리","권한","유지하다","긴급한"],
+  ["keen","열망하는","~에 복종하다","불평하다","부과하다"],["enthusiastic","열정적인","맹세하다","항의","위반하다"],
+  ["criterion","기준","시간을 엄수하는","제거하다","음모"],["recollect","생각해내다","동기를 부여하다","일화","일관성있는"],
+]);
+
+VOCAB[27] = makeDay([
+  ["counterpart","대응하는 사람","동의어","권한","부족"],["contract","계약","발표하다","호화로운","증발시키다"],
+  ["ultraviolet","자외선","지배적인","희미한","거대한"],["conceal","숨기다","임명하다","대통령의 지위","훈육하다"],
+  ["acoustic","음향의","효율적인","임대차 계약","흡수하다"],["discipline","훈육하다","선사시대의","미생물","무질서한"],
+  ["contradict","모순되다","이해하다","예비의","경멸하다"],["complement","보완하다","재판관","조각하다","방해하다"],
+  ["peasant","영세농민","모방하다","마음에 떠오르게 하다","훑어보다"],["split","쪼개다","토하다","분출하다","부패"],
+  ["delete","삭제하다","조절하다","찌르다","충돌하다"],["separate","분리된","응시하다","후한","자세"],
+  ["certify","증명하다","쓰레기","놀리다","자격"],["thorough","철저한","파멸하다","요새","별개의"],
+  ["garment","의류","(안내광고용) 책자","앞서다","남을 괴롭히다"],["disclose","공개하다","약속","주장하다","엄격한"],
+  ["irrigate","관개하다","임박한","완전한","마술을 부리다"],["casual","느긋한","꿰매다","군림","떨다"],
+  ["reveal","폭로하다","알아채다","사상자","고안하다"],["poison","독","뒤","짜다","능력있는"],
+  ["expose","노출시키다","진수시키다","미신","놀라게 하다"],["bitter","쓴","등록하다","고함치다","녹이다"],
+  ["toxic","유독한","해결","꽃봉오리","생각하다"],["drought","가뭄","사치","도둑","등식화하다"],
+  ["divide","나누다","황폐화시키다","따라잡다","침해하다"],["assault","습격","건축가","운송화물","화려한"],
+  ["antique","옛날의","재판관","거만한","읽고 쓸 줄 아는"],["confirm","확인하다","양심","추위로 떨다","유리한 점"],
+  ["convict","유죄를 선고하다","화나게하다","폭발하다","집중하다"],["absurd","우스꽝스러운","원시적인","봉투","당뇨병"],
+  ["agriculture","농업","제거하다","남자다운","기르다"],["crude","조잡한","주위","추상적인","겁을 먹은"],
+]);
+
+VOCAB[28] = makeDay([
+  ["mold","(주조용의) 틀","세탁소","경직된","흉내내다"],["roast","굽다","인정하다","성숙한","배열"],
+  ["volcano","화산","이해하다","무너지다","집중하다"],["weird","이상한","비난하다","밑에 깔린","운명"],
+  ["pesticide","살충제","이루다","이야기하다","경쟁하다"],["cease","그만두다","과감한","합법의","야망"],
+  ["eternal","영원한","일치하다","흐느끼다","눌러 부수다"],["span","한뼘","휴대할수 있는","타원형","가뭄"],
+  ["vet","수의사","그만두다","기도하다","물질"],["permanent","오랫동안 지속되는","문명화하다","애매한","수소"],
+  ["splendid","호화로운","난파","높이다","치유하다"],["notion","관념","(시각기억등이) 흐림","감정 이입","빈번한"],
+  ["versus","몇 대몇의","진짜의","역병","주위"],["accumulate","모으다","설교","수소","울다"],
+  ["magnificent","장대한","알리다","상업의","~와 겨루다"],["thrift","검약","숨기다","침을 뱉다","말의"],
+  ["elevate","높이다","정상의","저주하다","독립한"],["resort","휴양지","물속에 잠기게 하다","도매의","예견하다"],
+  ["aspire","열망하다","낙담시키다","전문적 기술","정제하다"],["ash","재","살충제","찬란한","추천하다"],
+  ["crawl","기어가다","실망시키다","부과하다","말끔한"],["majestic","위엄 있는","추정하다","흐름","관여하다"],
+  ["physician","내과의사","화석","유전자","거만한"],["odd","이상한","논쟁","임박한","음침한"],
+  ["suspect","의심하다","결과","설비","충실한"],["normal","정상의","혼란에 빠뜨리다","(1회의)복용량","전형적인"],
+  ["cheat","부정행위하다","(연극.영화의)휴식시간","거절하다","왈칵 흘러나오다"],["formula","방식","단편","낭비하는","불모의"],
+  ["surgeon","외과의사","포기하다","인접하다","숫자"],["peculiar","독특한","꽃","인종의","일축하다"],
+  ["deed","행위","존엄","벽장","제거하다"],["erupt","분출하다","붙이다","복사하다","역사의"],
+]);
+
+VOCAB[29] = makeDay([
+  ["landfill","쓰레기매립지","부과하다","남아도는","게걸스럽게 먹다"],["disorder","무질서","거절하다","낭비하는","부담"],
+  ["abstract","추상적인","연속","아주 좋아하다","생산하다"],["retire","퇴직하다","놀라다","기대다","불모의"],
+  ["boundary","경계","위반하다","위험","진정한"],["resign","사임하다","설교","대리점","벌하다"],
+  ["hemisphere","반구","꿰맴","생물의 조직","반사하다"],["warrant","정당화하다","복지","격노","대사관"],
+  ["tempt","유혹하다","식별하다","중대한","승무원"],["concrete","구체적인","도래","억지로 시키다","극단적인"],
+  ["sparkle","불꽃","회복하다","금융","조종하다"],["extinct","멸종한","결점","진정한","의류"],
+  ["litter","쓰레기","칭찬","주요한","꽃"],["presidency","대통령의 지위","포기하다","신중한","온도계"],
+  ["outstanding","뛰어난","식욕","공동으로 일하다","협상하다"],["quit","그만두다","오랫동안 지속되는","이상한","짜증나게 하다"],
+  ["border","국경","기압계","(마음의)혼란","손상되지 않은"],["bounce","튀다","찌르다","맡기다","특성"],
+  ["candidate","지원자","대륙","망원경","눌러 부수다"],["congestion","혼잡","준비하다","생각하다","향수"],
+  ["vowel","모음","고아","빠른","기도하다"],["genuine","진짜의","조잡한","~하기쉬운","위생의"],
+  ["glitter","반짝이다","친척","임명하다","공식화하다"],["blade","(칼 등의) 날","가리키다","수입","회전하다"],
+  ["altitude","고도","노력","살충제","자신있는"],["leap","도약","초조한","고갈시키다","증기"],
+  ["spectator","구경꾼","죽을 운명의","전기","들러붙다"],["thesis","학위 논문","익명의","억누르다","남용하다"],
+  ["proceed","나아가다","놀라게 하다","합법의","적합한"],["garbage","쓰레기","추천하다","생각하다","열등한"],
+  ["supreme","최고의","제거하다","가혹한","침해하다"],["inevitable","피할 수 없는","대륙","수출하다","반응하다"],
+]);
+
+VOCAB[30] = makeDay([
+  ["portray","묘사하다","높이다","일시적인","중독자"],["polar","극지의","휘젓다","통일하다","말을 더듬다"],
+  ["sufficient","충분한","시간을 엄수하는","포기하다","조언"],["revive","소생하다","굴욕을 느끼게하다","잣다","썩다"],
+  ["vague","모호한","간섭하다","출판하다","협력하다"],["partial","부분적인","채용하다","부정의","아는사람"],
+  ["sue","고소하다","열렬한","비옥한","학위 논문"],["abrupt","갑작스러운","쓰레기","부과하다","가능성이 있는"],
+  ["nominate","추천하다","깊은 인상을 주다","출석하다","해임"],["summit","정상","촉진하다","심부름","한모금"],
+  ["vomit","토하다","망쳐놓다","결심하다","이성적인"],["fluent","유창한","참가하다","~에 접근하다","사색하다"],
+  ["amuse","흥겹게하다","증발시키다","사실상의","동전"],["convention","집회","앞서다","섞다","가장자리"],
+  ["breathtaking","숨이 막히는 듯한","직업","향수","찬란한"],["superficial","표면의","~와 겨루다","병","드문드문한"],
+  ["perfume","향수","광고하다","할당하다","돌출한"],["terrific","아주 훌륭한","고통을 덜다","차별하다","대략의"],
+  ["deficient","부족한","왕위","재발하다","검색하다"],["adequate","충분한","이성적인","보증하다","옹호자"],
+  ["incline","기울다","악명높은","애정","우울한"],["fortress","요새","포함하다","혁명","물러나다"],
+  ["designate","임명하다","세련된","현저한","분리하다"],["conference","회의","논쟁","냄새","다음의"],
+  ["revenue","수입","구체적인","(소리등을) 크게 하다","모욕하다"],["originate","시작하다","목초지","높이다","개척자"],
+  ["entertain","즐겁게하다","~하기 쉬운","감소하다","흐느끼다"],["depict","묘사하다","식욕","편리한","필수적인"],
+  ["crew","승무원","싹이 돋다","탐욕","그릇된 인식"],["fabulous","아주 멋진","목초지","번창하다","자극하다"],
+  ["awesome","굉장히 멋진","향기","새롭게 하다","꿰맴"],["appoint","임명하다","마술을 부리다","갈다","질식시키다"],
+]);
+
+// For days 31-55, generate data
+VOCAB[31] = makeDay([
+  ["conform","따르다","보장하다","부풀리다","사서"],["hydrogen","수소","(마음의)혼란","칭찬하다","성숙한"],
+  ["patrol","순찰하다","목표의","찍다","마침내"],["suitable","적당한","대로","모조","다리를 절다"],
+  ["anniversary","기념일","동양","모조","정밀한"],["biased","편향된","배반하다","남용하다","진정한"],
+  ["glow","빨갛게 불타다","고용하다","미끄러지다","악화시키다"],["neutral","중립의","가사","짜증나게 하다","피로"],
+  ["appropriate","적당한","그럴듯한","경배하다","시작하다"],["greed","탐욕","맞바꾸다","합의","인종의"],
+  ["diabetes","당뇨병","보증하다","예비의","정직한"],["prejudice","편견","존경","신음하다","필수적인"],
+  ["obey","~에 복종하다","음모","무한한","침입하다"],["replace","~을 대신하다","전구","미끄러지다","확보하다"],
+  ["bilingual","이중 언어 사용자의","밀어닥치다","전망","대화하다"],["statue","동상","흐느끼다","사실상의","살금살금 기다"],
+  ["terminate","종결하다","다수의","유창한","죄책감"],["fraud","사기","보상하다","찌르다","인공의"],
+  ["molecule","분자","성취하다","여론조사","하위의"],["substitute","대체하다","증발시키다","출석하다","공중을 맴돌다"],
+  ["repetitive","되풀이하는","결심하다","모욕하다","견디어내다"],["atom","원자","열망하다","활용하다","권한"],
+  ["sculpture","조각","희미해지다","적격의","흥겹게하다"],["closet","벽장","필수적인","혼동하다","제외하다"],
+  ["telescope","망원경","증기","상대","주위"],["carbon","탄소","막다","소중히 하다","의류"],
+  ["scent","냄새","놀라게 하다","깨우다","암호화하다"],["pound","두근거리다","적당한","개혁","갈채"],
+  ["outcast","버림받은","공급하다","기르다","채택하다"],["fragrance","향기","눈부시게 하다","야망","채택하다"],
+  ["apt","~하는 경향이 있는","전통문화유산","황제","전시하다"],["microscope","현미경","수확","싹이 돋다","일으키다"],
+]);
+
+VOCAB[32] = makeDay([
+  ["virtual","사실상의","의류","달성하다","빠른"],["pregnant","임신한","끄덕이다","공포","예산"],
+  ["harvest","수확","전통문화유산","화나게하다","장점"],["discriminate","차별하다","돌출한","지시하다","냄새를 맡다"],
+  ["inform","알리다","작은 사건","무서운","연간의"],["liberty","자유","공급하다","점차 감소하다","이상한"],
+  ["sow","씨를 뿌리다","생태계","자격","분출하다"],["dismiss","일축하다","큰배","자극하다","전기"],
+  ["spill","엎지르다","비교하다","구매","영향"],["temporary","일시적인","야망","증발시키다","원고"],
+  ["cultivate","경작하다","긍정적인","양조하다","수입"],["hover","공중을 맴돌다","기대다","주목하다","원고"],
+  ["librarian","사서","사투리","증발시키다","조잡한"],["lunar","달의","인정하다","버림받은","쌓아올리다"],
+  ["notify","알리다","저항할 수 없는","제출하다","형제자매"],["burst","폭발하다","부족한","분자","~을 대신하다"],
+  ["ironic","풍작적인","적합한","솔선","등록하다"],["synonym","동의어","제한하다","애정","맡기다"],
+  ["momentary","순간적인","해로운","음료","충격"],["capture","붙잡다","방향","반구","실험실"],
+  ["float","뜨다","단편","당혹케하다","소리치다"],["pretend","인체하다","입증하다","촉진하다","과소 평가하다"],
+  ["mischief","장난","노력","악명높은","(방.집등이)넓은"],["drift","표류하다","풍부하다","예비의","구매"],
+  ["arrest","체포하다","관통하다","잡아채다","감옥"],["explode","폭발하다","재","발음하다","당혹케하다"],
+  ["dignity","존엄","끊임없는","정밀한","보장하다"],["trait","특성","가로채다","밝히다","눈부시게 하다"],
+  ["antibiotic","항생 물질","거만한","황폐화시키다","학기"],["criticize","비판하다","고소하다","장애","만족시키다"],
+  ["blame","비난하다","소설","예산","길이"],["wicked","사악한","역경","나오다","열망하다"],
+]);
+
+VOCAB[33] = makeDay([
+  ["skeptical","회의적인","냉기","흘리다","적성"],["orient","동양","호소하다","붙이다","절다"],
+  ["detach","분리하다","위험","학기","놀라게 하다"],["glare","섬광","물을 튀기다","인용하다","빼다"],
+  ["yawn","하품하다","(접촉)전염","유명인","전형적인"],["halt","멈추다","크게 놀라게 하다","(배심원의) 평결","놀라게 하다"],
+  ["stride","성큼성큼 걷다","설득하여 ~시키다","증기","회사"],["stubborn","완고한","벌하다","자비로운","올라가다"],
+  ["plumber","배관공","필요로 하다","외상치료의","유전자"],["awkward","어색한","동화하다","기어가다","열망하다"],
+  ["fossil","화석","세련된","발생시키다","놀라게 하다"],["ministry","(정부의)부서","동경하다","사임하다","거대한"],
+  ["enlarge","크게 하다","명백한","이국적인","판"],["drain","물을 빼다","죄책감","재료","비웃다"],
+  ["lick","핥다","깊은 인상을 주다","봉투","꽃봉오리"],["suspend","매달다","비어있는","진화하다","~으로 여기다"],
+  ["souvenir","기념품","경악","읽고 쓸 줄 아는","타협"],["stretch","펴다","존엄","잡아채다","맡기다"],
+  ["prose","산문","밝히다","자존심","파괴하다"],["solemn","엄숙한","정교한","습기있는","~에 복종하다"],
+  ["drown","물에 빠져 죽다","유창한","실행하다","생생한"],["flush","왈칵 흘러나오다","이루다","지배하다","가사"],
+  ["accuse","비난하다","속이다","예비의","영세농민"],["stick","들러붙다","퇴직하다","인정하다","우주의"],
+  ["award","상","평가","종사하다","차지하다"],["expand","팽창시키다","완고한","보험","조리법"],
+  ["reward","보상","열의","긴급한","광대한"],["attach","붙이다","정신적인","해","채택하다"],
+  ["collide","충돌하다","강조하다","불어넣다","돌출한"],["subscribe","가입하다","지배적인","주고받기","문의하다"],
+  ["kidnap","납치하다","세탁소","빼앗다","비난하다"],["suspicious","의심하는","굶주리다","필수적인","숨이 막히는 듯한"],
+]);
+
+VOCAB[34] = makeDay([
+  ["peer","동료","모욕하다","껍질을 벗기다","연속적인"],["incident","작은 사건","실제의","불필요한","굳어지다"],
+  ["disguise","변장","아주 멋진","일시적인","이주하다"],["skip","건너뛰다","갈다","실신시키다","기대게하다"],
+  ["underestimate","과소 평가하다","모호한","직물","봉투"],["blend","섞다","일상의 일","겁을 먹은","심오한"],
+  ["rely","기대다","검약","공포의","완고한"],["renowned","유명한","화폐의","출석하다","생태계"],
+  ["lottery","복권","솔선","관개하다","고문"],["weary","지친","부족한","~을 능가하다","갈채"],
+  ["straightforward","정직한","분배하다","반대의","유리한 점"],["prominent","돌출한","완전한","끈기","중단하다"],
+  ["complicated","복잡한","낭비하는","보충하다","문의하다"],["marvel","놀라다","특성","함유하다","미신"],
+  ["nuisance","폐","속담","폐","통화"],["sprint","전속력으로 달리다","당뇨병","건축가","남아도는"],
+  ["sovereign","통치자","의심하다","진공의","순간적인"],["commodity","상품","짜증나게 하다","악명높은","편견"],
+  ["estimate","평가","동시대의","스며들게 하다","물방울을 떨어뜨리다"],["emperor","황제","별개의","보내다","싹이 돋다"],
+  ["insult","모욕하다","다음의","정당화하다","호되게 꾸짖다"],["offend","화나게 하다","진수시키다","조각","심한 고통"],
+  ["intercept","가로채다","발생하다","이성적인","소극적인"],["merchandise","상품","황폐화시키다","~하는 경향이 있다","방송"],
+  ["cognitive","인식의","훔치다","충격","씨를 뿌리다"],["conscience","양심","자서전","진수시키다","판"],
+  ["appetite","식욕","풍족","예산","견디다"],["pollen","꽃가루","구부리다","결백한","목적"],
+  ["bond","결속","조사","높이다","연금"],["phenomenon","현상","떨다","속삭임","소개하다"],
+  ["invade","침해하다","본사","설득하다","관료정치"],["refuge","피난처","화석","닮다","물물교환"],
+]);
+
+VOCAB[35] = makeDay([
+  ["mill","제분소","질질 끌다","아주 훌륭한","줄기"],["domestic","가정의","막다","최고의","고상한"],
+  ["poke","찌르다","균형","통합하다","실제의"],["seize","붙잡다","단편","비웃다","모욕하다"],
+  ["semester","학기","빨갛게 불타다","당황하게 하다","탄력 있는"],["modify","수정하다","분별있는","아주 멋진","긴급한"],
+  ["tangible","유형의","인정하다","낭비하는","별개의"],["reconcile","화해시키다","공연하다","~할 가치가 있다","운문"],
+  ["reap","거둬들이다","주창하다","부","~을 구성하다"],["aristocracy","귀족정치","확보하다","발생시키다","뜨다"],
+  ["revise","변경하다","목적지","주위","매우 귀중한"],["transaction","거래","통합하다","굴러 떨어지다","멸종한"],
+  ["fix","고치다","수소","증언","편의시설"],["second-hand","중고품의","자존심","침해하다","받다"],
+  ["snatch","잡아채다","사기","논박하다","슬퍼하다"],["spiral","악순환","새롭게 하다","강조하다","제거하다"],
+  ["renew","갱신하다","임박한","복수","파괴하다"],["reinforce","강화하다","간섭하다","폭발하다","공동으로 일하다"],
+  ["repair","수리하다","친구","여명","기대하다"],["wrinkle","주름지다","탐험하다","고함치다","출판하다"],
+  ["tactic","전술","회상","비서","조심"],["resume","이력서","증가","금지하다","책략"],
+  ["internal","내부의","깊은 인상을 주다","(불 등을) 끄다","끼워 넣다"],["principle","원리","습기","환상","바꾸다"],
+  ["slim","가느다란","최후의","암호화하다","질질 끌다"],["smash","박살내다","늘리다","생태계","아주 좋아하다"],
+  ["grab","잡아채다","동료","심부름","동맹하다"],["external","외부의","무너지다","호화로운","등식화하다"],
+  ["elaborate","정교한","미친듯한","악순환","하수"],["reign","군림","편향된","지배적인","등록하다"],
+  ["gross","총계의","우수한","화려한","자비"],["receive","받다","수입","즉시의","모으다"],
+]);
+
+VOCAB[36] = makeDay([
+  ["referee","심판","가볍게 두드리다","구경꾼","불러일으키다"],["precede","앞서다","복지","근육","전기"],
+  ["sprout","싹이 돋다","가입하다","공급하다","평가하다"],["upcoming","다가오는","대표자","동전","줄기"],
+  ["yearn","동경하다","복사하다","인체하다","미끄러짐"],["premium","상","재산","튀기다","보장하다"],
+  ["spacious","(방.집등이)넓은","뒤쫓다","복제하다","추론하다"],["wreck","난파","인질","고용하다","존경하다"],
+  ["hardship","고난","일치","꽃가루","감사하는"],["recur","재발하다","도시의","회상","장기간에 걸친"],
+  ["sting","찌르다","산산이 부서지다","높이날다","기질"],["adversity","역경","슬퍼하다","인체하다","집중하다"],
+  ["refrain","삼가다","가뭄","무시하다","열등한"],["assign","할당하다","~와 동행하다","포장하다","진공의"],
+  ["waterproof","방수의","인정하다","편의시설","층"],["ruin","파멸하다","애정","박살내다","도덕적인"],
+  ["sneeze","재채기하다","종결하다","장례식","부"],["spoil","망쳐놓다","시대","장난","이전의"],
+  ["simile","직유","일상의 일","지나치게 뚱뚱한","끊임없는"],["quest","원정","망원경","침입하다","유산"],
+  ["wither","시들다","강박적인","꿰맴","일치하다"],["handicap","불이익","갈채","엄밀히 조사하다","번영하다"],
+  ["punctual","시간을 엄수하는","반대하다","소매","재채기하다"],["obstacle","장애","열정적인","동정","화석"],
+  ["trim","다듬다","미묘한","생물의 조직","도구"],["flourish","번창하다","고용하다","완고한","자존심"],
+  ["realm","영역","학위 논문","판매자","분배하다"],["gorgeous","화려한","평가","화나게하다","학기"],
+  ["allocate","할당하다","특권","희생","소설"],["rehearse","되풀이 하다","비위맞추다","(칼 등의) 날","발생시키다"],
+  ["thrive","번영하다","규칙적인","협력하다","고독한"],["prosper","번영하다","희미한","제지하다","식별하다"],
+]);
+
+VOCAB[37] = makeDay([
+  ["retain","계속유지하다","변장","신음","쓰레기매립지"],["errand","심부름","단백질","공식화하다","항생 물질"],
+  ["rigid","경직된","금지하다","폭발하다","긍정적인"],["splash","물을 튀기다","폐렴","서약","멈추다"],
+  ["simulate","흉내내다","가혹한","숙달된","흔적"],["transparent","투명한","추상적인","복사하다","위생의"],
+  ["primary","원초적인","예약하다","여론조사","반대의"],["pneumonia","폐렴","상속하다","호되게 꾸짖다","느긋한"],
+  ["slam","쾅닫다","화려한","물러나다","피로"],["prone","~하기 쉬운","엎드려 있는","전설","심판"],
+  ["sentimental","감상적인","검약","원정","경영간부"],["respiration","호흡","위반하다","견본","행위"],
+  ["chore","허드렛 일","배관공","국경","치수"],["specimen","견본","연장하다","개별의","추방하다"],
+  ["stupid","어리석은","무섭게 하다","전념하다","통로"],["bloom","꽃","폭로하다","교과 과정","담그다"],
+  ["submit","제출하다","나누다","짜다","흐느끼다"],["predominant","지배적인","수입","축하연","작은 사건"],
+  ["blossom","꽃","원자","잠시 중지하다","감소하다"],["ethnic","인종의","친척","격노","주요한"],
+  ["flexible","유연한","설비","연금","침식하다"],["stumble","비틀거리다","공적","영양실조","포위하다"],
+  ["texture","직물","큰 슬픔","호흡","여성"],["temperate","도를 넘지 않는","직유","서약하다","조정하다"],
+  ["racial","인종의","해임","투명한","부족한"],["plot","음모","조사","상대","돌아다니다"],
+  ["telegraph","전신","분출하다","근본적인","분배하다"],["radiate","내보이다","복수","지시하다","쪼개다"],
+  ["vacuum","진공의","가볍게 두드리다","무섭게 하다","주관적인"],["principal","주요한","순진한","육중한","졸업하다"],
+  ["elastic","탄력 있는","전략","쓴","새롭게 하다"],["portable","휴대할수 있는","습격","흐름","비틀거리다"],
+]);
+
+VOCAB[38] = makeDay([
+  ["stale","신선하지 않은","마찰","임명하다","눈부시게 하다"],["masculine","남자다운","중대한","살다","상호의"],
+  ["taboo","금기","오도하는","열렬한","설교"],["render","~이 되게하다","제분소","쓸모없는","굶주리다"],
+  ["unveil","밝히다","구성하다","소중히 하다","거대한"],["gender","성별","목표","제출하다","협력하다"],
+  ["hostile","적대하는","처형하다","악순환","거둬들이다"],["swirl","소용돌이치다","운문","공격적인","증언"],
+  ["overbearing","거만한","기념비","독재자","인공의"],["rear","뒤","불어넣다","균형","외부의"],
+  ["feminine","여성","상품","개인적인","무질서"],["rob","강탈하다","아주 훌륭한","설비","원시적인"],
+  ["magnitude","방대함","제지하다","그만두다","포기하다"],["uphold","지지하다","닻","혼잡","천재"],
+  ["compact","아담한","울다","낙천주의자","의식하고 있는"],["throne","왕위","상호작용하다","발음하다","생태계"],
+  ["steer","조종하다","사투리","권위","처형하다"],["curse","저주하다","청년기","사라지다","자세"],
+  ["retrieve","되찾다","희생","생태계","놀라게 하다"],["insulate","절연하다","기르다","수확","남은 음식"],
+  ["intake","섭취","사악한","최고의","모호한"],["vein","정맥","무한한","부","경험적인"],
+  ["artificial","인공의","정당화하다","배열","유독한"],["synthetic","합성의","정규 교과 과정 이외의","(불 등을) 끄다","항생 물질"],
+  ["random","무작위의","냉장하다","다음의","모면하다"],["surrender","포기하다","설교하다","꽃","휴양지"],
+  ["compromise","타협","부족한","따르다","거대한"],["aggressive","공격적인","붙이다","등록하다","적당한"],
+  ["analyze","분석하다","명성","조종하다","불러일으키다"],["obscure","불명료한","편향된","밀어닥치다","제거하다"],
+  ["exert","발휘하다","귀족정치","부지런한","짜증나게 하다"],["navigate","길을 찾다","생명의","닦다","직경"],
+]);
+
+VOCAB[39] = makeDay([
+  ["extent","넓이","특수한","연속","잡아채다"],["envy","선망","뒤쫓다","비위맞추다","신중한"],
+  ["severe","엄격한","희미한","구부리다","신속한"],["skid","미끄러짐","원자","모욕하다","혁명"],
+  ["intermission","(연극.영화의)휴식시간","저항하다","흡입하다","배반하다"],["slip","미끄러지다","엄격한","결합","중요한"],
+  ["concise","간결한","임금","편집하다","영예로운"],["adolescence","청년기","경쟁하다","제도","이상한"],
+  ["extravagant","낭비하는","층","체포하다","애벌레"],["memorial","기념비","편집하다","증발시키다","초조한"],
+  ["soak","적시다","반구","제도","자비"],["dip","살짝 담그다","자극하다","진공의","감독하다"],
+  ["illuminate","비추다","강화하다","독재자","이상한"],["enlighten","계몽하다","~하지 않는","수소","적당한"],
+  ["collapse","무너지다","죄책감","음료","나오다"],["exchange","주고받기","빠른","뚜렷한","긍정적인"],
+  ["monument","기념비","조종하다","주장하다","흡수하다"],["juvenile","어린이다운","충돌하다","덜다","탄원"],
+  ["courtesy","예의범절","학회","적당한","유연한"],["accommodate","수용하다","떨다","관련있는","동상"],
+  ["dialect","사투리","사치","상냥한","소화하다"],["accord","합의","갈채를 보내다","독점","상품 진열대"],
+  ["brochure","(안내광고용) 책자","힐끗 보기","빼다","모조"],["mundane","세속적인","축하하다","예의범절","풍작적인"],
+  ["ally","동맹하다","중대한","모이다","갑작스러운"],["choke","질식시키다","즐겁게하다","부서지기 쉬운","유전"],
+  ["barter","물물교환","여유가 있다","추론하다","생태계"],["fatigue","피로","단순화하다","민주주의","조각"],
+  ["afflict","고통을 주다","굽다","낭송하다","운송화물"],["utilize","활용하다","강박적인","대본","신중한"],
+  ["harsh","가혹한","미신","전기","중단하다"],["jealous","질투하는","흉내내다","대다수","도구"],
+]);
+
+VOCAB[40] = makeDay([
+  ["advent","도래","당황하게하다","큰배","식료품점"],["density","밀도","냉기","배열","구슬"],
+  ["intact","손상되지 않은","반응하다","구조","위험"],["trail","질질 끌다","화물","근육","마지못해 하는"],
+  ["corporation","회사","변경하다","확대하다","핥다"],["enterprise","기업체","가전제품","묵상하다","실마리"],
+  ["delicate","연약한","노력하다","방아쇠","재산"],["oval","타원형","수감하다","상의하다","(안내광고용) 책자"],
+  ["defect","결점","벗어나다","방아쇠","익명의"],["consecutive","연속적인","제분소","낭송하다","약간"],
+  ["martial","호전적인","거절하다","자신있는","직관"],["discharge","해임","대참사","굉장히 멋진","쌓아올리다"],
+  ["encode","암호화하다","긴장","칭찬","견디다"],["shortcoming","결점","육중한","분명한","발견하다"],
+  ["outweigh","(가치.중요성이)~보다크다","이용하다","소리치다","가짜의"],["chill","냉기","차지하다","마침내","희미한"],
+  ["innate","타고난","배열","사실상의","요리"],["applaud","갈채를 보내다","대참사","복수","효율적인"],
+  ["fragile","부서지기 쉬운","놀라게 하다","더러운","타고난"],["drag","질질끌다","시도","인정하다","자격"],
+  ["linger","사라지지 않다","소개하다","매우 귀중한","막다"],["doom","운명","형벌","견디어내다","동정"],
+  ["flaw","결점","겁나게 하다","화해시키다","당황하게하다"],["dwindle","점차 감소하다","외국으로","위로하다","휘젓다"],
+  ["fake","가짜의","동일한","크게 놀라게 하다","전기"],["fabric","옷감","문지르다","꿰매다","촉진하다"],
+  ["fate","운명","놀라게 하다","조정하다","주위의 사정"],["adore","아주 좋아하다","놀라게 하다","선거하다","명성"],
+  ["gratitude","감사함","열대 지방의","부정의","반응하다"],["glance","흘끗 봄","포즈","지배적인","대화하다"],
+  ["parasite","기생충","상품","주입하다","타고난"],["glimpse","힐끗 보기","이중 언어 사용자의","수의사","습격"],
+]);
+
+VOCAB[41] = makeDay([
+  ["famine","기근","한모금","재산","요구하다"],["basin","대야","보험","피하다","배 위에"],
+  ["starve","굶주리다","짜다","중립의","악덕"],["brew","양조하다","부딪히다","외국으로","다양한"],
+  ["commute","통근하다","따라잡다","소유하다","부풀리다"],["outbreak","발생","받아쓰기를 하다","설교","내려가다"],
+  ["compel","억지로 시키다","~의 탓으로 돌리다","긴장","벗어나다"],["fertile","비옥한","놀리다","합의","조정하다"],
+  ["savage","야만인","맹렬한","탐욕","기대게하다"],["barren","불모의","예상하다","깨우다","아는사람"],
+  ["laundry","세탁소","닦다","탄원","음향의"],["counsel","조언","숨이 막히는 듯한","교과 과정","본능"],
+  ["pierce","관통하다","근거없는 이야기","인접하다","당황하게하다"],["humble","겸손한","적합한","녹이다","휴양지"],
+  ["diagnose","진단하다","역겨운","열대 지방의","타고난"],["nasty","더러운","통과","초과하다","좋은기회"],
+  ["brutal","짐승의","야만적인","무자비한","잔인한"],["petroleum","석유","정확한","열망하는","범위"],
+  ["prevent","막다","발견하다","초과하다","이용하다"],["abbreviate","생략하다","영원한","높이날다","이주하다"],
+  ["grief","큰 슬픔","오래 견디는","수정하다","나누다"],["expel","추방하다","육중한","지배하다","혁신하다"],
+  ["juggle","마술을 부리다","토론","동전","따라잡다"],["bump","부딪히다","상기하다","진화하다","필수적인"],
+  ["avoid","피하다","주관적인","영향을 미치다","처음의"],["obese","지나치게 뚱뚱한","짜내다","부과하다","주의를 흩뜨리다"],
+  ["boast","자랑하다","정상의","타협","농축하다"],["oblige","의무를 지우다","결속","마술을 부리다","침해하다"],
+  ["modest","별로 크지 않은","자신있는","스며들다","미묘한"],["detergent","세제","~하는 경향이 있다","똑똑히 발음하다","선사시대의"],
+  ["bully","남을 괴롭히다","야망","(가치.중요성이)~보다크다","존엄"],["attorney","변호사","주위의 사정","독특한","새롭게 하다"],
+]);
+
+VOCAB[42] = makeDay([
+  ["retail","소매","포즈","어린이다운","직면하다"],["estate","재산","추천하다","동맹하다","확신시키다"],
+  ["dismay","당황하게하다","여유가 있다","개요","유연한"],["hygiene","위생","치명적인","눈살을 찌푸리다","(가치.중요성이)~보다크다"],
+  ["monetary","화폐의","편집하다","적당한","이해하다"],["swell","부풀다","추상적인","물러나다","흘리다"],
+  ["inflate","부풀리다","물속에 잠기게 하다","환상","소중히 하다"],["fusion","결합","자극하다","전형적인","삼가다"],
+  ["finance","금융","고통을 주다","고문","격렬한"],["sanitary","위생의","버림받은","바꾸다","총계의"],
+  ["inquire","문의하다","적격의","붙잡다","바꾸어 말하다"],["alert","경계하는","위원회","철저한","군림"],
+  ["wholesale","도매의","그릇된 인식","다수의","항해"],["encounter","우연히 만나다","정상","맡기다","풍족"],
+  ["refine","정제하다","낙담시키다","직면하다","기꺼이 ~하는"],["criminal","범죄자","물러나다","주름지다","열등한"],
+  ["outline","개요","전형적인","경멸","분리된"],["vertical","수직의","개혁","반응하다","떠돌아다니다"],
+  ["mortal","죽을 운명의","파멸하다","허락하다","불평하다"],["vessel","큰배","더럽히다","타당한","조정하다"],
+  ["reform","개혁","전신","고소하다","미신"],["tenant","임차인","이주하다","더미","경례하다"],
+  ["flatter","비위맞추다","물러나다","정맥","조종하다"],["coherent","논리 정연한","물에 빠져 죽다","받다","부재"],
+  ["decent","예의 바른","야만인","재산","결점"],["paraphrase","바꾸어 말하다","촉진하다","의도하다","오염시키다"],
+  ["lease","임대차 계약","튀기다","장식하다","겁많은"],["obsess","사로잡히다","상호작용하다","합병하다","장애"],
+  ["bureaucracy","관료정치","적법한","전설","긁다"],["horizontal","수평의","채용하다","강박적인","쪼개다"],
+  ["audible","들리는","익다","연속적인","채식주의자"],["submarine","잠수함","쓸모없는","부지런한","줄다"],
+]);
+
+VOCAB[43] = makeDay([
+  ["funeral","장례식","생태계","몹시 바라다","증가"],["intrude","침입하다","발견하다","막다","재간있는"],
+  ["interfere","간섭하다","견디어내다","부담","묘사하다"],["spit","침을 뱉다","주요한","조언","산마루"],
+  ["impose","부과하다","문자 그대로의","얽힌","주식"],["liable","~하기쉬운","숙달된","문명화하다","묘사하다"],
+  ["diplomat","외교관","처리","표류하다","증언"],["extracurricular","정규 교과 과정 이외의","움츠리다","적응시키다","섬광"],
+  ["withhold","억제하다","조상","타당한","수확"],["embassy","대사관","배심원단","결합시키다","외상치료의"],
+  ["embody","구체적으로 표현하다","규칙적인","응시하다","연속"],["worship","경배하다","통찰력","자외선","승인하다"],
+  ["devour","게걸스럽게 먹다","유사성","마찰","문자 그대로의"],["odor","냄새","조사하다","임금","축하하다"],
+  ["facilitate","촉진하다","채식주의자","빠지다","직업"],["unanimous","전원일치의","주고받기","미생물","발산하다"],
+  ["drastic","과감한","냄새를 맡다","철저한","기계공"],["accompany","~와 동행하다","문의하다","닮다","영장류"],
+  ["negotiate","협상하다","종결하다","쓴","파편"],["playwright","극작가","생략하다","실신시키다","통과"],
+  ["enforce","시행하다","추구하다","휴양지","적대하는"],["dispel","~을 쫓아버리다","동료","장기간에 걸친","모호한"],
+  ["vice","악덕","불명료한","말의","낙담시키다"],["virtue","미덕","긴장","~을 면밀히 조사하다","빼다"],
+  ["furnish","제공하다","침을 뱉다","국경","신속한"],["improvise","즉석에서 하다","세속적인","움켜쥐다","생명의"],
+  ["ambassador","대사","특수한","이방인","자식"],["envelope","봉투","세속적인","화석","제거하다"],
+  ["extreme","극단적인","견디다","타고난","배관공"],["setback","방해","너비","끌어내다","정상"],
+  ["acute","격렬한","재산","가장자리","알리다"],["pray","기도하다","영양","만족시키다","분명한"],
+]);
+
+VOCAB[44] = makeDay([
+  ["intermediate","중급의","번창하다","근본적인","예언"],["senator","상원 의원","동일한","교과 과정","억지로 시키다"],
+  ["extract","뽑다","허락하다","대참사","관여하다"],["rotate","회전하다","고체의","상의하다","미개한"],
+  ["script","대본","현저한","형벌","예산"],["consent","동의","세우다","역사의","충실한"],
+  ["spin","잣다","복사하다","문의하다","버리다"],["autobiography","자서전","결론을 내리다","조심하다","달성하다"],
+  ["comprise","~을 구성하다","설교","얼다","조잡한"],["inhale","흡입하다","호흡","기생충","거둬들이다"],
+  ["vapor","증기","온도","갈채","토론"],["conspicuous","눈에 띄는","기업체","합성물","석유"],
+  ["abolish","폐지하다","모성의","물질대사","황폐화시키다"],["heritage","전통문화유산","사서","마음에 떠오르게 하다","법률을 제정하다"],
+  ["evaporate","증발시키다","수수께끼","소량","사색하다"],["protein","단백질","조잡한","빈번한","갈다"],
+  ["grasp","움켜쥐다","전문적 기술","직업","얻다"],["moisture","습기","토하다","희생","배반하다"],
+  ["dreadful","무서운","불모의","추정하다","합성의"],["confess","인정하다","투명한","제공하다","하품하다"],
+  ["manuscript","원고","박살내다","분류하다","거대한"],["vigorous","원기왕성한","속력","저주하다","매우 귀중한"],
+  ["harass","괴롭히다","요새","물을 빼다","계속 ~하다"],["mourn","슬퍼하다","축하연","기념품","표류하다"],
+  ["orbit","궤도","영장류","자랑하다","강탈하다"],["heredity","유전","올라가다","친척","매우 귀중한"],
+  ["humid","습기있는","(정부의)부서","순찰하다","실험실"],["herald","예고하다","위로하다","불쑥 나타나다","탄원"],
+  ["legacy","유산","해","수입","할당하다"],["cling","달라붙다","빠지다","공개하다","분자"],
+  ["biography","전기","견본","도덕적인","갈다"],["withdraw","물러나다","철저한","(접촉)전염","엄격한"],
+]);
+
+VOCAB[45] = makeDay([
+  ["chaotic","무질서한","빠른","통합하다","얽힌"],["plunge","감소하다","조각하다","거래","시들다"],
+  ["imprison","수감하다","제안하다","학문의","합병하다"],["parallel","나란한","독재자","원정","작동시키다"],
+  ["tyrant","폭군","부지런한","위로하다","고통을 가하다"],["announce","발표하다","별개의","주목할 만한","맡기다"],
+  ["jail","감옥","살짝 담그다","위성","보존하다"],["conceive","마음속에 품다","종","얻다","물러나다"],
+  ["notorious","악명높은","이야기하다","장식하다","적당한"],["collaborate","공동으로 일하다","필사적인","정상의","가볍게 두드리다"],
+  ["sip","한모금","건설하다","묽게하다","사라지다"],["formulate","공식화하다","물속에 잠기게 하다","규제하다","약한"],
+  ["declare","선언하다","제지하다","마비시키다","감상적인"],["heap","더미","가혹한","결속","고소하다"],
+  ["dictator","독재자","뜨다","떨다","토론"],["chase","뒤쫓다","후원자","~에 익숙해진","나오다"],
+  ["monopoly","독점","희미한","상대","시대"],["suck","빨다","친척","추정하다","회의"],
+  ["rational","이성적인","교외","도구","제분소"],["facility","편의시설","자랑하다","수입","세균"],
+  ["vacant","비어있는","모으다","구슬","재해"],["anonymous","익명의","지성","배관공","사막"],
+  ["banish","추방하다","당뇨병","시도","속력"],["dissolve","녹이다","주목할 만한","소극적인","경쟁하다"],
+  ["friction","마찰","증발시키다","기울다","화물"],["proclaim","선언하다","인용하다","바꾸다","증언"],
+  ["tumble","굴러 떨어지다","자발적인","주의를 흩뜨리다","세게하다"],["incessant","끊임없는","대사관","소용돌이치다","정확한"],
+  ["vogue","유행","겁쟁이","보이지 않는","특허"],["devise","고안하다","유지하다","호되게 꾸짖다","찌르다"],
+  ["prescribe","처방하다","울다","혼동하다","예외"],["stack","쌓아올리다","추천하다","뿌리다","불모의"],
+]);
+
+VOCAB[46] = makeDay([
+  ["withstand","저항하다","증언","책략","직유"],["penetrate","침투하다","원리","주저하다","고치다"],
+  ["delegate","대표자","복사하다","펴다","별로 크지 않은"],["symmetry","균형","심부름","빠지다","성큼성큼 걷다"],
+  ["decay","부패","열의","다음의","서약하다"],["evoke","불러일으키다","원시적인","호흡","하품하다"],
+  ["creep","살금살금 기다","저명한","신의","공개하다"],["contagion","(접촉)전염","냄새","포즈","혼잡"],
+  ["dispatch","파견하다","독","달의","동전"],["plead","간청하다","박살내다","관점","경례하다"],
+  ["subsequent","다음의","납치하다","현상","가설"],["voyage","항해","잡아채다","유전자","적당한"],
+  ["tease","놀리다","임신한","죄책감","박살내다"],["stern","엄격한","애정","감독하다","실행하다"],
+  ["faint","희미한","채택하다","닦다","견디다"],["accelerate","~를 가속화하다","유전","근거없는 이야기","필사적인"],
+  ["disgust","혐오감","영세농민","위험","양립할 수 있는"],["faculty","(대학의) 학부","그만두게 하다","소유하다","송신하다"],
+  ["expertise","전문적 기술","연간의","인식의","돌다"],["cruise","순항하다","악명높은","불명예","고통을 주다"],
+  ["sneak","살금살금 들어오다","~에 익숙해진","화나게하다","교외"],["manifest","명백한","짐승의","겸손한","부패"],
+  ["immobilize","움직이지 못하게하다","나오다","의상","상호의"],["vulnerable","약한","난파","이주하다","저항하다"],
+  ["rot","썩다","위험","몹시 바라다","대조"],["ridicule","비웃음","똑똑히 발음하다","파견하다","합성물"],
+  ["plague","역병","흔들리다","숙달된","왈칵 흘러나오다"],["ambiguous","애매한","제조하다","고통을 가하다","애정"],
+  ["dim","어둠침침한","포장하다","번창하다","탄력 있는"],["mock","비웃다","돌진하다","재료","무작위의"],
+  ["bankrupt","파산한","씨를 뿌리다","의식","건축가"],["misleading","오도하는","환대하는","외과의사","병"],
+]);
+
+VOCAB[47] = makeDay([
+  ["preach","설교하다","이론","사기","억제하다"],["betray","배반하다","자산","만족시키다","(정부의)부서"],
+  ["abdomen","배","반응하다","배달하다","되풀이하는"],["ingenious","재간있는","생략하다","길을 잃은","전통문화유산"],
+  ["expire","만기가 되다","행동하다","존엄","천재"],["anatomy","해부","의상","변하다","인정하다"],
+  ["divorce","이혼","견본","굉장히 멋진","경례하다"],["foretell","예견하다","위도","편집하다","놀리다"],
+  ["amplify","(소리등을) 크게 하다","놀라다","순항하다","학기"],["suppress","진압하다","제한하다","파산한","~을 구성하다"],
+  ["induce","설득하여 ~시키다","계속 ~하다","반대의","배달하다"],["skeleton","해골","연약한","비위맞추다","원정"],
+  ["haunt","(유령이)출몰하다","얻다","제거하다","장대한"],["extinguish","(불 등을) 끄다","슬퍼하다","떨다","들러붙다"],
+  ["deduct","빼다","들어감","즉시의","결론을 내리다"],["wipe","닦다","책임을 지다","위임","저장"],
+  ["sermon","설교","수정하다","생태계","졸업하다"],["subtract","빼다","공연하다","재","물을 빼다"],
+  ["prophecy","예언","신음","설득하다","경계하는"],["burglar","도둑","(불 등을) 끄다","부","긴급한"],
+  ["coin","동전","물질대사","오두막집","지시하다"],["mop","닦다","시도","해","일치"],
+  ["imminent","임박한","게걸스럽게 먹다","이야기하다","유창한"],["fragment","파편","고상한","폭발하다","마음에 떠오르게 하다"],
+  ["oppress","억압하다","발산하다","악명높은","비율"],["coincide","일치하다","포즈","결심한","학위 논문"],
+  ["slaughter","도살","분별있는","추구하다","감정 이입"],["weep","울다","고용하다","고도","과소 평가하다"],
+  ["sob","흐느끼다","주목할 만한","비난하다","우스꽝스러운"],["bribe","뇌물","~하는 경향이 있다","동요시키다","제출하다"],
+  ["pirate","해적","바꾸어 말하다","분배하다","흉내내다"],["futile","쓸모없는","가느다란","간섭하다","적응시키다"],
+]);
+
+VOCAB[48] = makeDay([
+  ["arrogant","오만한","폐","부족한","진수시키다"],["excel","뛰어나다","원자","살아남다","특수한"],
+  ["smuggle","밀수하다","남은 음식","새롭게 하다","영양실조"],["hospitable","환대하는","눈살을 찌푸리다","단언하다","이론"],
+  ["cite","인용하다","갈채","투쟁","축하연"],["leak","누출","층","버림받은","투명한"],
+  ["drip","물방울을 떨어뜨리다","긍정적인","상업의","묘사하다"],["seep","스며들다","상원 의원","적성","한뼘"],
+  ["vain","허영심이 강한","방해하다","해석하다","표면"],["pension","연금","지친","세게하다","삼가다"],
+  ["stray","길을 잃다","소비하다","끌다","상의하다"],["gamble","도박하다","형벌","빨다","사람들"],
+  ["paralyze","마비시키다","이론","거둬들이다","방송"],["indulge","빠지다","버림받은","침입하다","조심"],
+  ["commence","개시하다","목표의","침해하다","주요산물"],["outrage","경악","극지의","동의","도둑"],
+  ["spontaneous","자발적인","가볍게 두드리다","이야기하다","간접적인"],["undertake","책임을 지다","제거하다","제정신의","고용하다"],
+  ["gaze","응시하다","움직이지 않는","물속에 잠기게 하다","정상의"],["quote","인용하다","운명","~에 익숙해진","엄밀히 조사하다"],
+  ["fury","격노","주의를 흩뜨리다","움켜쥐다","소유하다"],["desolate","황량한","쓸쓸한","기구","연상하다"],
+  ["numb","감각이 없는","마비된","고아","방아쇠"],["stare","응시하다","독","절대 필요한","추방하다"],
+  ["condense","농축하다","미생물","보완하다","기근"],["duplicate","복사하다","시대","파편","책략"],
+  ["subside","가라앉다","안정된","빠른","내과의사"],["despise","경멸하다","존엄","처음의","운동선수"],
+  ["replica","모조","질질끌다","제정신의","소비하다"],["stain","더럽히다","유감","공동체","성큼성큼 걷다"],
+  ["execute","처형하다","풍부하다","복지","증상"],["avenue","대로","민주주의","찬란한","낭비하는"],
+]);
+
+VOCAB[49] = makeDay([
+  ["limp","다리를 절다","상원 의원","유아","놀라다"],["dilute","묽게하다","잠시 중지하다","팽창시키다","이전의"],
+  ["relevant","관련있는","존경","표류하다","약탈자"],["distress","고민","다 써버리다","진압하다","물속에 잠기게 하다"],
+  ["torture","고문","전신","돌다","(주조용의) 틀"],["eminent","저명한","귀중한","세속적인","문학의"],
+  ["corrupt","부패한","다 써버리다","놀라게 하다","사로잡히다"],["vocation","천직","전략","번식하다","눈에 띄는"],
+  ["subordinate","하위의","똑 부러짐","수입","운동량"],["salute","경례하다","가혹한","소화하다","약속"],
+  ["frantic","미친듯한","곤경","퇴직하다","경험적인"],["lament","슬퍼하다","가사","조상","직경"],
+  ["timid","겁많은","고난","가라앉다","승인하다"],["provoke","화나게하다","이상한","천재","황량한"],
+  ["prestigious","영예로운","다수의","몹시 바라다","감염시키다"],["verse","운문","방향","도매의","제거하다"],
+  ["segment","부분","설득하여 ~시키다","~을 쫓아버리다","묘사하다"],["scrape","문지르다","지구의","서약","바꾸다"],
+  ["scared","겁을 먹은","여명","동정","관계가 있다"],["barometer","기압계","심판","성별","풀을 먹다"],
+  ["thermometer","온도계","반란을 일으키다","막다","관여하다"],["divine","신의","관계가 있다","계약","파다"],
+  ["sniff","냄새를 맡다","사치","절대적인","극복하다"],["patron","후원자","예상하다","굳어지다","행위"],
+  ["legislate","법률을 제정하다","위원회","연금","믿을수 없는"],["agony","심한 고통","식욕","시작하다","부풀리다"],
+  ["verify","입증하다","(안내광고용) 책자","사상자","보편화 되다"],["advocate","주창하다","자랑하다","촉구하다","정교한"],
+  ["twilight","여명","긍정적인","논증하다","어린이다운"],["lyric","가사","자애","관개하다","복잡한"],
+  ["coward","겁쟁이","실마리","공포의","부분"],["trigger","방아쇠","흉내내다","대리점","도매의"],
+]);
+
+VOCAB[50] = makeDay([
+  ["offspring","자식","과감한","거절하다","어리석은"],["transient","일시적인","판","겁쟁이","발산하다"],
+  ["freight","운송화물","결심한","해방하다","변하다"],["feat","공적","고독한","조잡한","빠지다"],
+  ["adhere","고수하다","조리법","방해","빈번한"],["empathy","감정 이입","되풀이 하다","신속한","대화하다"],
+  ["redundant","불필요한","영장류","방아쇠","흔적"],["adverse","해로운","변하다","사기","친밀한"],
+  ["tuck","밀어넣다","적당한","노력하다","~하는 경향이 있는"],["hostage","인질","서약하다","(1회의)복용량","최고의"],
+  ["perish","소멸하다","기념비","원고","임명하다"],["immigrate","이민 오다","제안하다","(물건.장소를) 둘러싸다","박살내다"],
+  ["vow","서약하다","규칙적인","정부 보조금","몹시 바라다"],["anecdote","일화","응시하다","완전한","결점"],
+  ["cargo","화물","자극하다","운동선수","망원경"],["sophisticated","세련된","산업의","조정하다","산산이 부서지다"],
+  ["swear","맹세하다","끌다","똑 부러짐","도매의"],["beware","조심하다","구매","졸업하다","기압계"],
+  ["overall","전부의","자산","모방하다","~으로 여기다"],["expedition","탐험","측정하다","비난하다","포용하다"],
+  ["predicament","곤경","투명한","기구","범하다"],["scramble","뒤섞다","이주하다","운명","주의"],
+  ["emigrate","이민 가다","포기하다","~의 탓으로 돌리다","대응하는 사람"],["proportion","비율","숨기다","허영심이 강한","격려하다"],
+  ["ascend","올라가다","오염시키다","대본","특수한"],["edge","가장자리","반대의","영향을 미치다","연기하다"],
+  ["stationary","움직이지 않는","진단하다","자애","평가하다"],["chronic","장기간에 걸친","편리한","빼다","억누르다"],
+  ["migrate","이주하다","촉구하다","동정","폐지하다"],["descend","내려가다","느긋한","격노","어색한"],
+  ["stammer","말을 더듬다","먼","구체적으로 표현하다","침식하다"],["pledge","서약","쾅닫다","약한","조각하다"],
+]);
+
+VOCAB[51] = makeDay([
+  ["obstinate","완고한","격노","검색하다","인접하다"],["speculate","사색하다","발휘하다","극단적인","윤리"],
+  ["peril","위험","축하연","맹세하다","제출하다"],["patent","특허","~에 복종하다","고무시키다","뿌리다"],
+  ["populate","거주시키다","분자","발산하다","해부"],["impair","해치다","비극","생각해내다","종결하다"],
+  ["inflict","고통을 가하다","민주주의","평가하다","분석하다"],["torment","고통","일치하다","상기하다","느긋한"],
+  ["crash","충돌하다","제외하다","극복하다","소화하다"],["maternal","모성의","가뭄","단조로운","아주 훌륭한"],
+  ["loom","불쑥 나타나다","납치하다","이득","반사하다"],["fatal","치명적인","누출","영장류","현상"],
+  ["infringe","위반하다","거대한","통치자","빈번한"],["claim","요구하다","재산","자의적인","집중하다"],
+  ["divert","바꾸다","관계가 있다","검색하다","임대차 계약"],["detest","혐오하다","잘 다루다","설득하다","교향곡"],
+  ["engage","종사하다","견본","놀리다","범위"],["casualty","사상자","파다","오두막집","수출하다"],
+  ["dangle","매달리다","풍족한","분류하다","넓이"],["transit","통과","미끄러지다","제조하다","목적지"],
+  ["scorn","경멸","비웃음","도매의","악화시키다"],["groan","신음하다","자원봉사자","확대하다","영토"],
+  ["flash","섬광","반대의","줄다","(불 등을) 끄다"],["foul","역겨운","되풀이 하다","고독한","감사하는"],
+  ["shrink","줄다","선망","수축하다","~에 복종하다"],["rigorous","철저한","냉기","경멸","타고난"],
+  ["deviate","벗어나다","먼","해결","혐오감"],["clash","충돌하다","튀기다","혼동하다","높이다"],
+  ["hazard","위험","경쟁하다","모이다","변장"],["disposition","배열","가정의","익다","활용하다"],
+  ["escalate","확대하다","낭비하는","별개의","제의하다"],["occasion","경우","단조로운","식민지","흉내내다"],
+]);
+
+VOCAB[52] = makeDay([
+  ["ailment","병","통근하다","지성","투쟁"],["clarify","분명히 하다","불꽃","가사","발생"],
+  ["blur","(시각기억등이) 흐림","받아쓰기를 하다","식용의","아주 좋아하다"],["multiple","다수의","후한","지구의","씨를 뿌리다"],
+  ["intricate","얽힌","통과","쪼개다","진수시키다"],["arouse","자극하다","전원의","주위","기준"],
+  ["analogy","유사성","합성물","투명한","영양분을 주다"],["surge","밀어닥치다","위험","(안내광고용) 책자","똑 부러짐"],
+  ["denounce","비난하다","출판하다","엄밀히 조사하다","반응하다"],["embed","끼워 넣다","산산이 부서지다","편견","영예로운"],
+  ["mandate","권한","빨다","대응하는 사람","눈에 잘띄는"],["intimidate","~을 위협하다","수확","중립의","진단하다"],
+  ["explicit","뚜렷한","뜨다","물을 빼다","동화하다"],["ensue","계속해서 잇따르다","직경","기쁨","발산하다"],
+  ["sore","아픈","휴대할수 있는","확대하다","문자 그대로의"],["condemn","비난하다","남은 음식","그만두다","닮다"],
+  ["console","위로하다","움켜쥐다","경례하다","옮기다"],["soothe","달래다","항생 물질","인식의","잠시 중지하다"],
+  ["hollow","속이 빈","공포의","제거하다","독점"],["measure","치수","연상하다","기업체","문명화하다"],
+  ["concern","관계가 있다","예상하다","장점","권한"],["preliminary","예비의","길들이다","폐지하다","담그다"],
+  ["stiffen","굳어지다","다가오는","묵상하다","요리"],["astray","길을 잃은","끊임없는","건너뛰다","경멸하다"],
+  ["abound","풍부하다","분별있는","전문적 기술","짐승의"],["entity","개체","마음속에 품다","특수한","완전한"],
+  ["prompt","신속한","초과하다","냄새를 맡다","도약"],["sparse","드문드문한","편견","~을 쫓아버리다","세우다"],
+  ["salient","현저한","곤경","뜨다","무질서"],["infuse","불어넣다","따라잡다","촉진하다","읽고 쓸 줄 아는"],
+  ["instill","스며들게 하다","섞다","냉장하다","뒤섞다"],["articulate","똑똑히 발음하다","개별의","모조","믿을 수 있는"],
+]);
+
+VOCAB[53] = makeDay([
+  ["amend","수정하다","삭제하다","기쁨","조정하다"],["authority","권위","전설","서약","대화하다"],
+  ["entail","일으키다","분리하다","연기하다","원고"],["petition","탄원","길을 찾다","고갈시키다","영향을 미치다"],
+  ["defy","무시하다","모방하다","몹시 바라다","빙하"],["bachelor","학사","자의적인","전문적 기술","표류하다"],
+  ["deteriorate","나빠지다","관개하다","모욕하다","개별의"],["aggravate","악화시키다","합법의","믿을수 없는","방수의"],
+  ["compensate","보상하다","해석하다","방해","편리한"],["delude","속이다","조각","구성하다","옷감"],
+  ["charity","자애","석유","문지르다","납득시키다"],["premonition","예고","간결한","서식지","생략하다"],
+  ["probe","엄밀히 조사하다","재해","생각해내다","살짝 담그다"],["supplement","보충하다","나아가다","포즈","권위"],
+  ["surpass","~을 능가하다","토론","결백한","엄청난"],["admonish","호되게 꾸짖다","압도하다","분출하다","팽창시키다"],
+  ["regime","제도","노출시키다","격렬한","안정된"],["gauge","측정하다","마음속에 품다","조사하다","끌어내다"],
+  ["eligible","적격의","비서","매우 귀중한","회사"],["comply","따르다","원고","저항하다","발생시키다"],
+  ["compatible","양립할 수 있는","미신","확신시키다","인정하다"],["scrutinize","~을 면밀히 조사하다","지배하다","(마음의)혼란","기압계"],
+  ["ingenuous","순진한","정상","역사의","언급하다"],["mute","무언의","슬퍼하다","보이지 않는","펴다"],
+  ["benevolent","자비로운","(칼 등의) 날","경직된","책임을 지다"],["stem","줄기","신의","기생충","남을 괴롭히다"],
+  ["equivalent","동등한","도매의","결합시키다","올라가다"],["stitch","꿰맴","설교하다","역경","허드렛 일"],
+  ["adjoin","인접하다","재해","허드렛 일","필사적인"],["wield","잘 다루다","접근","줄다","유명한"],
+  ["sibling","형제자매","반사하다","자산","유명인"],["correlation","상관관계","증가","추방하다","건축가"],
+]);
+
+VOCAB[54] = makeDay([
+  ["raid","침입하다","광대한","시간을 엄수하는","격렬한"],["stroll","한가롭게 거닐다","굽다","엄숙한","분자"],
+  ["commission","위임","재채기하다","육체 노동의","아주 훌륭한"],["arbitrary","자의적인","용서하다","악화시키다","한뼘"],
+  ["metabolism","물질대사","끊임없는","변천","쓰레기매립지"],["refute","논박하다","위생의","눈을 깜박이다","해"],
+  ["stall","상품 진열대","아픈","관념","예의 바른"],["shelter","은신처","먼","기준","어린이다운"],
+  ["discern","식별하다","바꾸다","이중 언어 사용자의","~에 존재하다"],["microbe","미생물","고통을 주다","적성","면역된"],
+  ["disrupt","혼란에 빠뜨리다","전구","통치자","삼가다"],["lame","절름발이의","조종하다","편견","결점"],
+  ["commend","추천하다","목적","짜내다","다양한"],["deter","그만두게 하다","(안내광고용) 책자","미끄러짐","인내"],
+  ["fraction","단편","당뇨병","미덕","식민지"],["turmoil","(마음의)혼란","생물의 조직","기생충","낭비하는"],
+  ["shatter","산산이 부서지다","중대한","친밀한","음향의"],["besiege","포위하다","맡기다","복사하다","질문지"],
+  ["apprehend","이해하다","친구","제분소","황폐화시키다"],["crush","눌러 부수다","주요한","버리다","배심원단"],
+  ["restrain","제지하다","아주 멋진","전념하다","싼물건"],["lodge","오두막집","부족한","제분소","부수다"],
+  ["autonomy","자치권","우수한","동등한","격노"],["agitate","동요시키다","위성","잘 다루다","포기하다"],
+  ["grind","갈다","구별하다","사악한","직면하다"],["dismal","음침한","갈채","논리 정연한","섬광"],
+  ["entice","유혹하다","검약","상상하다","위반하다"],["leftover","남은 음식","제외하다","엄격한","육체 노동의"],
+  ["astound","크게 놀라게 하다","(유령이)출몰하다","화나게 하다","광고하다"],["grave","중대한","(1회의)복용량","쓰레기","오랫동안 지속되는"],
+  ["dose","(1회의)복용량","줄다","속담","물방울을 떨어뜨리다"],["cripple","절다","공격적인","사람들","희생"],
+]);
+
+VOCAB[55] = makeDay([
+  ["dazzle","눈부시게 하다","촉구하다","단서","게걸스럽게 먹다"],["inherent","타고난","권한","눈에 띄는","단순화하다"],
+  ["rage","격노","분별있는","중급의","따르다"],["inject","주입하다","너비","꽃","오래 견디는"],
+  ["empirical","경험적인","대표자","바치다","구매"],["compile","편집하다","꽃봉오리","인정하다","아주 좋아하다"],
+  ["sway","흔들리다","혐오감","물속에 잠기게 하다","거래"],["morale","사기","불평하다","임금","가혹한"],
+  ["disperse","분산시키다","보내다","외국으로","삼가다"],["treaty","조약","모으다","다가오는","격노"],
+  ["submerge","물속에 잠기게 하다","협상하다","흘리다","공동으로 일하다"],["barbaric","미개한","단언하다","유창한","구체적인"],
+  ["latitude","위도","내려가다","과장하다","굳어지다"],["converse","대화하다","곤경","찌르다","등록하다"],
+  ["elude","모면하다","교외","일치","긍정적인"],["scope","범위","고민","~의 탓으로 돌리다","필요로 하다"],
+  ["expense","비용","타고난","설비","마찰"],["indignant","성난","소중히 하다","재채기하다","활용하다"],
+  ["traumatic","외상치료의","열등한","광고하다","고수하다"],["immerse","담그다","바다표범","벗어나다","주름지다"],
+  ["swap","맞바꾸다","경악","판","반대의"],["gratify","만족시키다","본사","한뼘","충동"],
+  ["deplete","고갈시키다","동맹하다","이루다","조직하다"],["maneuver","책략","새롭게 하다","모으다","물속에 잠기게 하다"],
+  ["recession","불경기","단순화하다","화석","놀라게 하다"],["congregate","모이다","느슨한","계속유지하다","찬란한"],
+  ["beverage","음료","도시의","현저한","반사하다"],["cue","단서","튀기다","대체하다","감옥"],
+  ["authentic","진정한","외국으로","보완하다","세제"],["staple","주요산물","기질","지배적인","평형"],
+  ["coarse","조잡한","중력","소유하다","사인"],["integrity","고결","수입","몇 대몇의","의식"],
+]);
+
+// ============================================================
+// APP STATE
+// ============================================================
+let questions = [];
+let currentIdx = 0;
+let answers = [];  // null = not answered, index 0-3 = chosen
+let selectedOption = null;
+
+function buildQuestions(startDay, endDay) {
+  const qs = [];
+  for (let d = startDay; d <= endDay; d++) {
+    if (!VOCAB[d]) continue;
+    VOCAB[d].forEach((word, wi) => {
+      // shuffle distractors + correct into 4 choices
+      const opts = shuffle([word.ko, ...word.distractors]);
+      const correctIdx = opts.indexOf(word.ko);
+      qs.push({ day: d, wordNum: wi + 1, en: word.en, ko: word.ko, options: opts, correct: correctIdx });
+    });
+  }
+  return qs;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = function () {
+  const startSel = document.getElementById('startDay');
+  const endSel = document.getElementById('endDay');
+  for (let i = 1; i <= 55; i++) {
+    startSel.innerHTML += `<option value="${i}">Day ${i}</option>`;
+    endSel.innerHTML += `<option value="${i}" ${i === 5 ? 'selected' : ''}>Day ${i}</option>`;
+  }
+  startSel.addEventListener('change', updateInfo);
+  endSel.addEventListener('change', updateInfo);
+  updateInfo();
+};
+
+function updateInfo() {
+  const s = parseInt(document.getElementById('startDay').value);
+  const e = parseInt(document.getElementById('endDay').value);
+  const days = Math.max(0, e - s + 1);
+  let words = 0;
+  for (let d = s; d <= e; d++) { if (VOCAB[d]) words += VOCAB[d].length; }
+  document.getElementById('infodays').textContent = days > 0 ? days : 0;
+  document.getElementById('infowords').textContent = words;
+}
+
+function startQuiz() {
+  const s = parseInt(document.getElementById('startDay').value);
+  const e = parseInt(document.getElementById('endDay').value);
+  if (s > e) { alert('시작 Day가 끝 Day보다 클 수 없습니다.'); return; }
+  questions = buildQuestions(s, e);
+  if (questions.length === 0) { alert('해당 범위에 단어가 없습니다.'); return; }
+  currentIdx = 0;
+  answers = new Array(questions.length).fill(null);
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+function renderQuestion() {
+  const q = questions[currentIdx];
+  const total = questions.length;
+  document.getElementById('progressText').textContent = `${currentIdx + 1} / ${total}`;
+  document.getElementById('dayBadge').textContent = `Day ${q.day}`;
+  document.getElementById('wordNum').textContent = `No.${currentIdx + 1}`;
+  document.getElementById('wordEnglish').textContent = q.en;
+  document.getElementById('wordHint').textContent = `완자 고등 · Day ${q.day} · #${q.wordNum}`;
+  const pct = (currentIdx / total) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  selectedOption = answers[currentIdx];
+
+  const container = document.getElementById('choicesContainer');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn' + (selectedOption === i ? ' selected' : '');
+    btn.innerHTML = `<span class="choice-num">${i + 1}</span>${opt}`;
+    btn.onclick = () => selectAnswer(i);
+    container.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx) {
+  selectedOption = idx;
+  answers[currentIdx] = idx;
+  // highlight
+  document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === idx);
+  });
+  // auto-advance after short delay
+  setTimeout(() => {
+    if (currentIdx < questions.length - 1) {
+      currentIdx++;
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  }, 350);
+}
+
+function skipWord() {
+  // leave answer as null
+  if (currentIdx < questions.length - 1) {
+    currentIdx++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+// ============================================================
+// RESULT
+// ============================================================
+function showResult() {
+  showScreen('resultScreen');
+  const total = questions.length;
+  let correctCount = 0;
+  const wrongList = [];
+  const correctList = [];
+
+  questions.forEach((q, i) => {
+    const ans = answers[i];
+    if (ans === q.correct) {
+      correctCount++;
+      correctList.push({ en: q.en, ko: q.ko, day: q.day });
+    } else {
+      wrongList.push({
+        en: q.en, ko: q.ko, day: q.day,
+        myAnswer: ans !== null ? q.options[ans] : '(미답)',
+      });
+    }
+  });
+
+  const pct = Math.round((correctCount / total) * 100);
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('scoreRaw').textContent = `${correctCount}/${total}`;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = total - correctCount;
+
+  // ring animation
+  const circumference = 289;
+  const offset = circumference - (pct / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('scoreCircle').style.strokeDashoffset = offset;
+    document.getElementById('scoreCircle').style.transition = 'stroke-dashoffset 1s ease';
+  }, 100);
+
+  // title
+  let title = '', sub = '';
+  if (pct >= 90) { title = '🎉 완벽에 가깝습니다!'; sub = '정말 뛰어난 실력이에요!'; }
+  else if (pct >= 70) { title = '👍 잘 했어요!'; sub = '조금만 더 다지면 완벽해요.'; }
+  else if (pct >= 50) { title = '📚 절반 통과!'; sub = '오답을 다시 복습해 보세요.'; }
+  else { title = '💪 더 연습해요!'; sub = '꾸준히 반복하면 반드시 늘어요.'; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSubtitle').textContent = sub;
+
+  // wrong section
+  const sec = document.getElementById('wrongSection');
+  sec.innerHTML = '';
+  if (wrongList.length > 0) {
+    sec.innerHTML += `<div class="wrong-list-title">✗ 틀린 단어 (${wrongList.length}개)</div>`;
+    wrongList.forEach(w => {
+      sec.innerHTML += `
+        <div class="wrong-item">
+          <div>
+            <div class="wrong-english">${w.en}</div>
+            <div class="wrong-answer-row">
+              <span class="wrong-correct">정답: ${w.ko}</span>
+              <span class="wrong-my"> &nbsp;/&nbsp; 내 답: ${w.myAnswer}</span>
+            </div>
+          </div>
+          <div class="wrong-day">Day ${w.day}</div>
+        </div>`;
+    });
+  }
+  if (correctList.length > 0 && wrongList.length > 0) {
+    sec.innerHTML += `<div class="divider"></div>`;
+    sec.innerHTML += `<div class="correct-list-title">✓ 맞은 단어 (${correctList.length}개)</div>`;
+    correctList.forEach(c => {
+      sec.innerHTML += `
+        <div class="correct-item">
+          <span class="correct-english">${c.en}</span>
+          <span class="correct-korean">${c.ko}</span>
+        </div>`;
+    });
+  }
+
+  // hide retry button if no wrong
+  document.querySelector('.btn-retry').style.display = wrongList.length > 0 ? '' : 'none';
+  window._wrongList = wrongList;
+  // 원본 question 객체를 별도 저장 (retryWrong에서 사용)
+  window._wrongQuestions = questions.filter((q, i) => answers[i] !== q.correct);
+}
+
+function retryWrong() {
+  const wrongQs = window._wrongQuestions || [];
+  if (wrongQs.length === 0) return;
+  // 원본 question 객체를 그대로 사용하되 선지만 다시 섞기
+  questions = wrongQs.map(q => {
+    const wordData = (VOCAB[q.day] || []).find(v => v.en === q.en);
+    if (!wordData) {
+      // VOCAB에서 못 찾으면 기존 options 그대로 사용
+      const opts = shuffle([...q.options]);
+      return { ...q, options: opts, correct: opts.indexOf(q.ko) };
+    }
+    const opts = shuffle([wordData.ko, ...wordData.distractors]);
+    return { day: q.day, wordNum: q.wordNum, en: q.en, ko: q.ko, options: opts, correct: opts.indexOf(q.ko) };
+  });
+  currentIdx = 0;
+  answers = new Array(questions.length).fill(null);
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+function goHome() {
+  showScreen('startScreen');
+  updateInfo();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
