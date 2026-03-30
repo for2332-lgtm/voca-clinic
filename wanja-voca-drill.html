@@ -322,6 +322,24 @@
   }
   .skip-btn:hover { border-color: var(--navy); color: var(--navy); }
 
+  .back-btn {
+    display: block;
+    width: 100%;
+    padding: 11px;
+    background: transparent;
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.12s;
+    margin-top: 8px;
+    opacity: 0.6;
+  }
+  .back-btn:hover { border-color: var(--wrong); color: var(--wrong); opacity: 1; }
+  .back-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+
   /* ── RESULT SCREEN ── */
   #resultScreen {
     max-width: 520px;
@@ -557,6 +575,7 @@
   </div>
   <div class="choices" id="choicesContainer"></div>
   <button class="skip-btn" onclick="skipWord()">→ 모르겠어요 (넘기기)</button>
+  <button class="back-btn" id="backBtn" onclick="goBack()">← 실수로 눌렀어요 (한 칸 앞으로)</button>
 </div>
 
 <!-- ===== RESULT SCREEN ===== -->
@@ -709,7 +728,7 @@ VOCAB[3] = [
   q("include","포함하다","생각해내다","실제의","중재하다"),
   q("range","범위","동요시키다","총계의","휴양지"),
   q("incorporate","통합하다","울다","제외하다","오도하는"),
-  q("alter","고치다","썩다","회전하다","변하다"),
+  q("alter","변하다","썩다","회전하다","유지하다"),
   q("involve","관여하다","(유령이)출몰하다","기어가다","숨이 막히는 듯한"),
   q("enrich","풍요하게하다","군림","예상하다","도살"),
   q("attempt","시도","역경","경멸","(도로를)포장하다"),
@@ -1911,6 +1930,10 @@ function renderQuestion() {
   document.getElementById('progressFill').style.width = pct + '%';
   selectedOption = answers[currentIdx];
 
+  const backBtn = document.getElementById('backBtn');
+  backBtn.disabled = currentIdx === 0;
+  backBtn.style.opacity = currentIdx === 0 ? '0.25' : '0.6';
+
   const container = document.getElementById('choicesContainer');
   container.innerHTML = '';
   q.options.forEach((opt, i) => {
@@ -1948,6 +1971,13 @@ function skipWord() {
   } else {
     showResult();
   }
+}
+
+function goBack() {
+  if (currentIdx <= 0) return;
+  currentIdx--;
+  answers[currentIdx] = null; // 이전 답 초기화
+  renderQuestion();
 }
 
 // ============================================================
