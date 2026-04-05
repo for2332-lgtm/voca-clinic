@@ -513,9 +513,106 @@
     background: var(--cream-dark);
     margin: 20px 0;
   }
+
+  /* ── 이어서 풀기 모달 ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15,35,87,0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 16px 48px rgba(15,35,87,0.25);
+  }
+  .modal-icon { font-size: 36px; margin-bottom: 12px; }
+  .modal-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .modal-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  .modal-progress {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-progress-label { font-size: 12px; color: rgba(245,237,217,0.7); }
+  .modal-progress-val {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--gold-light);
+  }
+  .modal-btns { display: flex; flex-direction: column; gap: 10px; }
+  .btn-continue {
+    padding: 14px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border-bottom: 3px solid var(--gold);
+    transition: all 0.15s;
+  }
+  .btn-continue:hover { background: var(--navy-light); }
+  .btn-restart {
+    padding: 12px;
+    background: transparent;
+    color: var(--text-mid);
+    border: 1.5px solid var(--cream-dark);
+    border-radius: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-restart:hover { border-color: var(--navy); color: var(--navy); }
 </style>
 </head>
 <body>
+
+<!-- ===== 이어서 풀기 모달 ===== -->
+<div class="modal-overlay" id="resumeModal">
+  <div class="modal-box">
+    <div class="modal-icon">📌</div>
+    <div class="modal-title">이전 학습이 남아있어요!</div>
+    <div class="modal-desc" id="modalDesc">중간에 멈춘 학습을 이어서 풀 수 있어요.</div>
+    <div class="modal-progress">
+      <span class="modal-progress-label">진행 현황</span>
+      <span class="modal-progress-val" id="modalProgress">0 / 0</span>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-continue" onclick="resumeQuiz()">▶ 이어서 풀기</button>
+      <button class="btn-restart" onclick="dismissResume()">처음부터 새로 시작</button>
+    </div>
+  </div>
+</div>
 
 <div class="header">
   <div class="logo-mark">O</div>
@@ -614,8 +711,7 @@
   <div id="wrongSection"></div>
 
   <div class="result-btns">
-    <button class="btn-retry" onclick="retryWrong()">✗ 오답만 다시풀기</button>
-    <button class="btn-back" onclick="goHome()">← 처음으로</button>
+    <button class="btn-back" onclick="goHome()" style="grid-column: 1 / -1;">← 처음으로 돌아가기</button>
   </div>
 </div>
 
@@ -1437,7 +1533,7 @@ VOCAB[34] = makeDay([
   ["lottery","복권","솔선","관개하다","고문"],["weary","지친","부족한","~을 능가하다","갈채"],
   ["straightforward","정직한","분배하다","반대의","유리한 점"],["prominent","돌출한","완전한","끈기","중단하다"],
   ["complicated","복잡한","낭비하는","보충하다","문의하다"],["marvel","놀라다","특성","함유하다","미신"],
-  ["nuisance","폐","속담","폐","통화"],["sprint","전속력으로 달리다","당뇨병","건축가","남아도는"],
+  ["nuisance","폐","속담","성가심","통화"],["sprint","전속력으로 달리다","당뇨병","건축가","남아도는"],
   ["sovereign","통치자","의심하다","진공의","순간적인"],["commodity","상품","짜증나게 하다","악명높은","편견"],
   ["estimate","평가","동시대의","스며들게 하다","물방울을 떨어뜨리다"],["emperor","황제","별개의","보내다","싹이 돋다"],
   ["insult","모욕하다","다음의","정당화하다","호되게 꾸짖다"],["offend","화나게 하다","진수시키다","조각","심한 고통"],
@@ -1881,6 +1977,8 @@ function shuffle(arr) {
 // ============================================================
 // INIT
 // ============================================================
+const SAVE_KEY = 'vocaclinic_save';
+
 window.onload = function () {
   const startSel = document.getElementById('startDay');
   const endSel = document.getElementById('endDay');
@@ -1891,7 +1989,69 @@ window.onload = function () {
   startSel.addEventListener('change', updateInfo);
   endSel.addEventListener('change', updateInfo);
   updateInfo();
+
+  // 저장된 데이터 있으면 모달 표시
+  checkSavedProgress();
 };
+
+function checkSavedProgress() {
+  try {
+    const saved = localStorage.getItem(SAVE_KEY);
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    if (!data.questions || data.questions.length === 0) return;
+    // 진행 중인 데이터가 있으면 모달 표시
+    const answered = data.answers.filter(a => a !== null).length;
+    const total = data.questions.length;
+    if (answered === 0 || answered >= total) {
+      // 아직 하나도 안 풀었거나 이미 완료면 무시
+      localStorage.removeItem(SAVE_KEY);
+      return;
+    }
+    document.getElementById('modalDesc').textContent =
+      `Day ${data.startDay}~${data.endDay} 범위를 풀다가 멈췄어요.\n이어서 계속할까요?`;
+    document.getElementById('modalProgress').textContent =
+      `${data.currentIdx} / ${total}`;
+    document.getElementById('resumeModal').classList.add('active');
+  } catch(e) {
+    localStorage.removeItem(SAVE_KEY);
+  }
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      questions, currentIdx, answers,
+      startDay: window._startDay,
+      endDay: window._endDay,
+    }));
+  } catch(e) {}
+}
+
+function clearProgress() {
+  localStorage.removeItem(SAVE_KEY);
+}
+
+function resumeQuiz() {
+  try {
+    const data = JSON.parse(localStorage.getItem(SAVE_KEY));
+    questions = data.questions;
+    currentIdx = data.currentIdx;
+    answers = data.answers;
+    window._startDay = data.startDay;
+    window._endDay = data.endDay;
+    document.getElementById('resumeModal').classList.remove('active');
+    showScreen('quizScreen');
+    renderQuestion();
+  } catch(e) {
+    dismissResume();
+  }
+}
+
+function dismissResume() {
+  clearProgress();
+  document.getElementById('resumeModal').classList.remove('active');
+}
 
 function updateInfo() {
   const s = parseInt(document.getElementById('startDay').value);
@@ -1911,6 +2071,9 @@ function startQuiz() {
   if (questions.length === 0) { alert('해당 범위에 단어가 없습니다.'); return; }
   currentIdx = 0;
   answers = new Array(questions.length).fill(null);
+  window._startDay = s;
+  window._endDay = e;
+  clearProgress();
   showScreen('quizScreen');
   renderQuestion();
 }
@@ -1956,19 +2119,22 @@ function selectAnswer(idx) {
   setTimeout(() => {
     if (currentIdx < questions.length - 1) {
       currentIdx++;
+      saveProgress(); // 자동 저장
       renderQuestion();
     } else {
+      clearProgress(); // 완료 시 저장 삭제
       showResult();
     }
   }, 350);
 }
 
 function skipWord() {
-  // leave answer as null
   if (currentIdx < questions.length - 1) {
     currentIdx++;
+    saveProgress(); // 자동 저장
     renderQuestion();
   } else {
+    clearProgress();
     showResult();
   }
 }
@@ -1976,7 +2142,8 @@ function skipWord() {
 function goBack() {
   if (currentIdx <= 0) return;
   currentIdx--;
-  answers[currentIdx] = null; // 이전 답 초기화
+  answers[currentIdx] = null;
+  saveProgress();
   renderQuestion();
 }
 
@@ -2058,34 +2225,16 @@ function showResult() {
     });
   }
 
-  // hide retry button if no wrong
-  document.querySelector('.btn-retry').style.display = wrongList.length > 0 ? '' : 'none';
+  // 저장 완전 삭제 (결과 화면 진입 시)
+  clearProgress();
+
+  // hide retry button - 버튼 없음
   window._wrongList = wrongList;
-  // 원본 question 객체를 별도 저장 (retryWrong에서 사용)
   window._wrongQuestions = questions.filter((q, i) => answers[i] !== q.correct);
 }
 
-function retryWrong() {
-  const wrongQs = window._wrongQuestions || [];
-  if (wrongQs.length === 0) return;
-  // 원본 question 객체를 그대로 사용하되 선지만 다시 섞기
-  questions = wrongQs.map(q => {
-    const wordData = (VOCAB[q.day] || []).find(v => v.en === q.en);
-    if (!wordData) {
-      // VOCAB에서 못 찾으면 기존 options 그대로 사용
-      const opts = shuffle([...q.options]);
-      return { ...q, options: opts, correct: opts.indexOf(q.ko) };
-    }
-    const opts = shuffle([wordData.ko, ...wordData.distractors]);
-    return { day: q.day, wordNum: q.wordNum, en: q.en, ko: q.ko, options: opts, correct: opts.indexOf(q.ko) };
-  });
-  currentIdx = 0;
-  answers = new Array(questions.length).fill(null);
-  showScreen('quizScreen');
-  renderQuestion();
-}
-
 function goHome() {
+  clearProgress();
   showScreen('startScreen');
   updateInfo();
 }
