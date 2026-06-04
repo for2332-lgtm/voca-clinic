@@ -1,7 +1,7 @@
 {
   "name": "OASIS VOCA CLINIC",
-  "short_name": "완자보카",
-  "description": "완자 고등 영어 단어 | 산본 오아시스 영어학원",
+  "short_name": "어휘클리닉",
+  "description": "고등 영어 어휘 학습 | 산본 오아시스 영어학원",
   "start_url": "wanja-voca-drill.html",
   "scope": "./",
   "display": "standalone",
