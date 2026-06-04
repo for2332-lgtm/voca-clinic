@@ -1,4 +1,4 @@
-const CACHE = 'oasis-wanja-v1';
+const CACHE = 'oasis-wanja-v2';
 const ASSETS = ['wanja-voca-drill.html', 'manifest.json', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).catch(()=>{}));
