@@ -241,26 +241,36 @@ header {
 }
 .opt-seg button.on { background: var(--navy); color: var(--gold-light); border-color: var(--navy); }
 
-/* resume banner */
+/* resume modal (전체 화면 — 못 보고 지나칠 수 없게) */
 .resume-banner {
-  max-width: 420px; margin: 0 auto 16px;
-  background: var(--navy);
-  border: 1.5px solid var(--gold);
-  border-radius: 14px;
-  padding: 14px 16px;
-  color: var(--cream);
+  position: fixed; inset: 0;
+  background: rgba(85,62,133,.55);
   display: none;
+  align-items: center; justify-content: center;
+  z-index: 90;
+  padding: 24px;
 }
-.resume-banner.show { display: block; }
-.resume-banner .rb-t { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--gold-light); }
-.resume-banner .rb-d { font-size: 12.5px; margin-bottom: 10px; }
-.rb-btns { display: flex; gap: 8px; }
+.resume-banner.show { display: flex; }
+.rb-card {
+  background: var(--cream);
+  border-radius: 26px;
+  border-bottom: 4px solid var(--gold);
+  padding: 26px 22px;
+  width: 100%; max-width: 340px;
+  text-align: center;
+  animation: rbPop .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes rbPop { 0% { transform: scale(.7); opacity: 0; } 70% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
+.rb-img { width: 110px; }
+.resume-banner .rb-t { font-family: 'Jua', sans-serif; font-size: 21px; color: var(--navy); margin-top: 8px; }
+.resume-banner .rb-d { font-size: 13.5px; color: #A87BB8; margin: 8px 0 16px; }
+.rb-btns { display: flex; flex-direction: column; gap: 8px; }
 .rb-btns button {
-  flex: 1; padding: 9px; border-radius: 9px; border: none;
-  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
+  padding: 14px; border-radius: 14px; border: none;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 15.5px; font-weight: 700; cursor: pointer;
 }
-.rb-resume { background: var(--gold); color: var(--navy); }
-.rb-new { background: transparent; color: var(--cream); border: 1px solid rgba(245,237,217,.4) !important; }
+.rb-resume { background: linear-gradient(135deg, #8A6FC8, #C58FE0); color: #fff; border-bottom: 3px solid #fff !important; }
+.rb-new { background: transparent; color: #B49CCB; font-size: 13px !important; text-decoration: underline; }
 
 /* ── round intro ── */
 #round-intro {
@@ -844,11 +854,14 @@ body { background: var(--cream); }
 <!-- setup -->
 <div class="screen active" id="screen-setup">
   <div class="resume-banner" id="resume-banner">
-    <div class="rb-t">진행 중인 서바이벌이 있어요</div>
-    <div class="rb-d" id="resume-desc"></div>
-    <div class="rb-btns">
-      <button class="rb-resume" onclick="resumeGame()">이어서 하기</button>
-      <button class="rb-new" onclick="dismissResume()">새로 시작</button>
+    <div class="rb-card">
+      <img class="rb-img" id="rb-img" alt="오둥이">
+      <div class="rb-t">잠깐! 하던 게임이 있어 👀</div>
+      <div class="rb-d" id="resume-desc"></div>
+      <div class="rb-btns">
+        <button class="rb-resume" onclick="resumeGame()">▶ 이어서 하기</button>
+        <button class="rb-new" onclick="dismissResume()">기록 지우고 새로 시작할래</button>
+      </div>
     </div>
   </div>
 
@@ -1889,6 +1902,7 @@ document.addEventListener('keydown', e => {
 
 window.onload = () => {
   $('m-img').src = STICKERS.jjang;
+  $('rb-img').src = STICKERS.omg;
   $('hero-img').src = STICKERS.yay;
   $('walker').src = STICKERS.yay;
   initSelects();
